@@ -3,6 +3,8 @@ package com.tolbier.algorithms.week4.kargerMinCut;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
+import java.util.Set;
 /* The file contains the adjacency list representation of a simple undirected graph. 
  * There are 200 vertices labeled 1 to 200. The first column in the file represents 
  * the vertex label, and the particular row (other entries except the first column)
@@ -23,27 +25,79 @@ import java.util.List;
 */
 
 public class AdjacencyList {
-	private final List<List<Integer>> adjacencyList;
-
+	private final List<List<Integer>> verticesList;
+	private final List<Set<Integer>> superNodes;
+	private Random rn = new Random();
+	
 	public AdjacencyList() {
-		adjacencyList =  new ArrayList<List<Integer>>();
+		verticesList = new ArrayList<List<Integer>>();
+		superNodes = new ArrayList<Set<Integer>>();
 	}
 
 	public void createVertex(int vertex) {
-		adjacencyList.add(vertex-1,new LinkedList<Integer>());
+		verticesList.add(vertex, new LinkedList<Integer>());
 	}
 
 	public int getNumberOfVertices() {
-		return adjacencyList.size();
+		return verticesList.size();
 	}
 
-	public void addEdge(int tailVertex, int headVertex) {
-		adjacencyList.get(tailVertex-1).add(headVertex);
-		
+	public void addEdge(Edge edge) {
+		verticesList.get(edge.getTailVertex()).add(edge.getHeadVertex());
 	}
 
 	public List<Integer> getEdgesFromVertex(int vertex) {
-		return adjacencyList.get(vertex-1);
+		return verticesList.get(vertex);
 	}
-	
+
+	protected List<Set<Integer>> getSuperNodes() {
+		return superNodes;
+	}
+
+	public int getNumberOfEdges() {
+		int numberOfEdges = 0;
+		for (List<Integer> vertexList : verticesList) {
+			numberOfEdges += vertexList.size();
+		}
+		return numberOfEdges;
+	}
+
+	public int getNumberOfEdges(int vertex) {
+		return verticesList.get(vertex).size();
+	}
+
+	public boolean edgeExists(Edge edge) {
+		if (!(vertexExists(edge.getTailVertex()) && vertexExists(edge.getHeadVertex())))
+			return false;
+		try {
+			return verticesList.get(edge.getTailVertex()).get(edge.getOrder()).intValue() == edge.getHeadVertex();
+		} catch (IndexOutOfBoundsException e) {
+			return false;
+		}
+	}
+
+	private boolean vertexExists(int vertex) {
+		return vertex >= 0 && vertex < verticesList.size();
+	}
+
+	public Edge getRandomEdge() {
+		int numberOfEdges = getNumberOfEdges();
+		int orderToSearch = rn.nextInt(numberOfEdges);
+		return getEdgeFromOrder(orderToSearch);
+
+	}
+
+	Edge getEdgeFromOrder(int order) {
+		int vertex=0;
+		int numberOfEdgesInVertex;
+		while ( (numberOfEdgesInVertex =  getNumberOfEdges(vertex))<= order ) {
+			order-=numberOfEdgesInVertex;
+			vertex++;
+		}
+		
+		
+		return new Edge(vertex,
+				getEdgesFromVertex(vertex).get(order),
+				order);
+	}
 }
