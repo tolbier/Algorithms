@@ -1,9 +1,10 @@
 package com.tolbier.algorithms.week4.kargerMinCut;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 /* The file contains the adjacency list representation of a simple undirected graph. 
@@ -25,56 +26,57 @@ import java.util.Set;
  * So e.g., if your answer is 5, just type 5 in the space provided.
 */
 
-
+import com.tolbier.algorithms.week4.kargerMinCut.exceptions.AdjacencyException;
 import com.tolbier.algorithms.week4.kargerMinCut.exceptions.AdjacencyIndexOutOfBoundsException;
+import com.tolbier.algorithms.week4.kargerMinCut.exceptions.AdjacencyVertexNotFoundException;
 
 public class AdjacencyList {
-	private final List<List<Integer>> verticesList;
-	private final List<Set<Integer>> superNodes;
+	private final Map<Integer,List<Integer>> verticesMap;
+	private final Map<Integer,Set<Integer>> superNodes;
 	private Random rn = new Random();
 	
 	public AdjacencyList() {
-		verticesList = new ArrayList<List<Integer>>();
-		superNodes = new ArrayList<Set<Integer>>();
+		verticesMap = new HashMap<Integer,List<Integer>>();
+		superNodes = new HashMap<Integer,Set<Integer>>();
 	}
 
 	public void createVertex(int vertex) {
-		verticesList.add(vertex, new LinkedList<Integer>());
+		verticesMap.put(vertex, new LinkedList<Integer>());
 	}
 	public void addEdge(Edge edge) {
-		verticesList.get(edge.getTail()).add(edge.getHead());
+		verticesMap.get(edge.getTail()).add(edge.getHead());
 	}
 
 	int getNumberOfVertices() {
-		return verticesList.size();
+		return verticesMap.size();
 	}
 
 
 	List<Integer> getEdgesListFromVertex(int vertex) {
-		return verticesList.get(vertex);
+		return verticesMap.get(vertex);
 	}
 
-	List<Set<Integer>> getSuperNodes() {
+	Map<Integer,Set<Integer>> getSuperNodes() {
 		return superNodes;
 	}
 
 	int getNumberOfEdges() {
 		int numberOfEdges = 0;
-		for (List<Integer> vertexList : verticesList) {
+		for (List<Integer> vertexList : verticesMap.values()) {
 			numberOfEdges += vertexList.size();
 		}
 		return numberOfEdges;
 	}
 
 	int getNumberOfEdges(int vertex) {
-		return verticesList.get(vertex).size();
+		return verticesMap.get(vertex).size();
 	}
 	
 	boolean edgeExists(Edge edge) {
 		if (!(vertexExists(edge.getTail()) && vertexExists(edge.getHead())))
 			return false;
 		try {
-			return verticesList.get(edge.getTail()).contains(edge.getHead());
+			return verticesMap.get(edge.getTail()).contains(edge.getHead());
 		} catch (IndexOutOfBoundsException e) {
 			return false;
 		}
@@ -84,13 +86,13 @@ public class AdjacencyList {
 			return getOrderedEdge(
 					orderedEdge.getTail(),
 					orderedEdge.getOrder()).equals(orderedEdge);
-		}catch (AdjacencyIndexOutOfBoundsException e){
+		}catch (AdjacencyException e){
 			return false;
 		}
 	}
 
 	boolean vertexExists(int vertex) {
-		return vertex >= 0 && vertex < verticesList.size();
+		return vertex >= 0 && vertex < verticesMap.size();
 	}
 
 	OrderedEdge getRandomEdge() {
@@ -111,10 +113,13 @@ public class AdjacencyList {
 				getEdgesListFromVertex(vertex).get(order),
 				order);
 	}
-	private OrderedEdge getOrderedEdge(int tail,int order)throws AdjacencyIndexOutOfBoundsException{
+	private OrderedEdge getOrderedEdge(int tail,int order)throws AdjacencyException{
 		int head ;
 		try {
-			head = verticesList.get(tail).get(order).intValue();
+
+			List<Integer> vertexList=	verticesMap.get(tail);
+			if (vertexList==null) throw new  AdjacencyVertexNotFoundException();
+			head = verticesMap.get(tail).get(order).intValue();
 		}catch (IndexOutOfBoundsException e) {
 			throw new AdjacencyIndexOutOfBoundsException();
 		}
@@ -123,7 +128,7 @@ public class AdjacencyList {
 
 	@Override
 	public String toString() {
-		return "AdjacencyList [\nverticesList=" + verticesList + ",\nsuperNodes=" + superNodes + "\n]";
+		return "AdjacencyList [\nverticesMap=" + verticesMap + ",\nsuperNodes=" + superNodes + "\n]";
 	}
 
 	void removeEdge(Edge edge) {
@@ -132,18 +137,15 @@ public class AdjacencyList {
 		
 	}
 	void removeEdgesFomList(int tail, int head) {
-		List<Integer> edgesList = verticesList.get(tail);
+		List<Integer> edgesList = verticesMap.get(tail);
 		edgesList.removeAll(Arrays.asList(new Integer[] {head}));
 	}
 
 	int countParallelEdges(Edge edge) {
 		int count = 0;
-		List<Integer> edgesList;
-		try {
-			 edgesList = verticesList.get(edge.getTail());
-		}catch(IndexOutOfBoundsException e) {
-			return 0;
-		}
+		List<Integer> edgesList = verticesMap.get(edge.getTail());
+		if (edgesList==null) return 0;
+
 		for (Integer head : edgesList) {
 			if (head==edge.getHead()) count ++;
 		}
