@@ -18,8 +18,8 @@ public class EdgeTest {
 	public void testCreateEdge() {
 		 edge = new Edge(1,5);
 		 assertNotNull(edge);
-		 assertEquals(1, edge.getTailVertex());
-		 assertEquals(5, edge.getHeadVertex());
+		 assertEquals(1, edge.getTail());
+		 assertEquals(5, edge.getHead());
 
 		 
 	}
@@ -28,19 +28,19 @@ public class EdgeTest {
 	public void testCreateEdge2() {
 		 edge = new Edge(1,1);
 		 assertNotNull(edge);
-		 edge.setTailVertex(3); 
-		 edge.setHeadVertex(2);
+		 edge.setTail(3); 
+		 edge.setHead(2);
 
-		 assertEquals(3, edge.getTailVertex());
-		 assertEquals(2, edge.getHeadVertex());
+		 assertEquals(3, edge.getTail());
+		 assertEquals(2, edge.getHead());
 	}
 	@Test
 	public void testSetVertices() {
 		 edge = new Edge(1,1);
 		 edge.setVertices(4, 5);
 		 assertNotNull(edge);
-		 assertEquals(4, edge.getTailVertex());
-		 assertEquals(5, edge.getHeadVertex());
+		 assertEquals(4, edge.getTail());
+		 assertEquals(5, edge.getHead());
 
 	}
 	

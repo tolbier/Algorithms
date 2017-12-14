@@ -1,8 +1,11 @@
-package com.tolbier.algorithms.week4.kargerMinCut;
+package com.tolbier.algorithms.week4.kargerMinCut.app;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+
+import com.tolbier.algorithms.week4.kargerMinCut.AdjacencyList;
+import com.tolbier.algorithms.week4.kargerMinCut.Edge;
  
 public class App {
 

@@ -1,46 +1,62 @@
 package com.tolbier.algorithms.week4.kargerMinCut;
 
 public class Edge {
-	private int tailVertex, headVertex,order;
+	private int tail, head;
 
 
-	public Edge(int tailVertex, int headVertex) {
+	public Edge(int tail, int head) {
 		super();
-		this.tailVertex = tailVertex;
-		this.headVertex = headVertex;
-		this.order = 0;
+		this.tail = tail;
+		this.head= head;
 	}
-	public Edge(int tailVertex, int headVertex, int order) {
-		super();
-		this.tailVertex = tailVertex;
-		this.headVertex = headVertex;
-		this.order = order;
-	}
-	protected void setVertices(int tailVertex,int headVertex) {
-		this.tailVertex = tailVertex;
-		this.headVertex = headVertex;
+	protected void setVertices(int tail,int head) {
+		this.tail = tail;
+		this.head = head;
 	}
 
-	protected int getTailVertex() {
-		return tailVertex;
+	protected int getTail() {
+		return tail;
 	}
 
-	protected void setTailVertex(int tailVertex) {
-		this.tailVertex = tailVertex;
+	protected void setTail(int tail) {
+		this.tail = tail;
 	}
 
-	protected int getHeadVertex() {
-		return headVertex;
+	protected int getHead() {
+		return head;
 	}
 
-	protected void setHeadVertex(int headVertex) {
-		this.headVertex = headVertex;
+	protected void setHead(int head) {
+		this.head = head;
 	}
 
-	protected int getOrder() {
-		return order;
+	
+	@Override
+	public String toString() {
+		return "[" + tail + "," + head + "]";
 	}
-	protected void setOrder(int order) {
-		this.order = order;
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + head;
+		result = prime * result + tail;
+		return result;
 	}
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Edge other = (Edge) obj;
+		if (head != other.head)
+			return false;
+		if (tail != other.tail)
+			return false;
+		return true;
+	}
+	
 }

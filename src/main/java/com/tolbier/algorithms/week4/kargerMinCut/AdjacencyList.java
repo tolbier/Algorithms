@@ -24,6 +24,9 @@ import java.util.Set;
  * So e.g., if your answer is 5, just type 5 in the space provided.
 */
 
+
+import com.tolbier.algorithms.week4.kargerMinCut.exceptions.AdjacencyIndexOutOfBoundsException;
+
 public class AdjacencyList {
 	private final List<List<Integer>> verticesList;
 	private final List<Set<Integer>> superNodes;
@@ -37,24 +40,24 @@ public class AdjacencyList {
 	public void createVertex(int vertex) {
 		verticesList.add(vertex, new LinkedList<Integer>());
 	}
+	public void addEdge(Edge edge) {
+		verticesList.get(edge.getTail()).add(edge.getHead());
+	}
 
-	public int getNumberOfVertices() {
+	int getNumberOfVertices() {
 		return verticesList.size();
 	}
 
-	public void addEdge(Edge edge) {
-		verticesList.get(edge.getTailVertex()).add(edge.getHeadVertex());
-	}
 
-	public List<Integer> getEdgesFromVertex(int vertex) {
+	List<Integer> getEdgesListFromVertex(int vertex) {
 		return verticesList.get(vertex);
 	}
 
-	protected List<Set<Integer>> getSuperNodes() {
+	List<Set<Integer>> getSuperNodes() {
 		return superNodes;
 	}
 
-	public int getNumberOfEdges() {
+	int getNumberOfEdges() {
 		int numberOfEdges = 0;
 		for (List<Integer> vertexList : verticesList) {
 			numberOfEdges += vertexList.size();
@@ -62,32 +65,40 @@ public class AdjacencyList {
 		return numberOfEdges;
 	}
 
-	public int getNumberOfEdges(int vertex) {
+	int getNumberOfEdges(int vertex) {
 		return verticesList.get(vertex).size();
 	}
-
-	public boolean edgeExists(Edge edge) {
-		if (!(vertexExists(edge.getTailVertex()) && vertexExists(edge.getHeadVertex())))
+	
+	boolean edgeExists(Edge edge) {
+		if (!(vertexExists(edge.getTail()) && vertexExists(edge.getHead())))
 			return false;
 		try {
-			return verticesList.get(edge.getTailVertex()).get(edge.getOrder()).intValue() == edge.getHeadVertex();
+			return verticesList.get(edge.getTail()).contains(edge.getHead());
 		} catch (IndexOutOfBoundsException e) {
 			return false;
 		}
 	}
+	boolean edgeExists(OrderedEdge orderedEdge) {
+		try {
+			return getOrderedEdge(
+					orderedEdge.getTail(),
+					orderedEdge.getOrder()).equals(orderedEdge);
+		}catch (AdjacencyIndexOutOfBoundsException e){
+			return false;
+		}
+	}
 
-	private boolean vertexExists(int vertex) {
+	boolean vertexExists(int vertex) {
 		return vertex >= 0 && vertex < verticesList.size();
 	}
 
-	public Edge getRandomEdge() {
+	OrderedEdge getRandomEdge() {
 		int numberOfEdges = getNumberOfEdges();
 		int orderToSearch = rn.nextInt(numberOfEdges);
-		return getEdgeFromOrder(orderToSearch);
-
+		return getEdgeFromTotalOrder(orderToSearch);
 	}
 
-	Edge getEdgeFromOrder(int order) {
+	OrderedEdge getEdgeFromTotalOrder(int order) {
 		int vertex=0;
 		int numberOfEdgesInVertex;
 		while ( (numberOfEdgesInVertex =  getNumberOfEdges(vertex))<= order ) {
@@ -95,9 +106,23 @@ public class AdjacencyList {
 			vertex++;
 		}
 		
-		
-		return new Edge(vertex,
-				getEdgesFromVertex(vertex).get(order),
+		return new OrderedEdge(vertex,
+				getEdgesListFromVertex(vertex).get(order),
 				order);
 	}
+	private OrderedEdge getOrderedEdge(int tail,int order)throws AdjacencyIndexOutOfBoundsException{
+		int head ;
+		try {
+			head = verticesList.get(tail).get(order).intValue();
+		}catch (IndexOutOfBoundsException e) {
+			throw new AdjacencyIndexOutOfBoundsException();
+		}
+		return new OrderedEdge(tail, head, order);
+	}
+
+	@Override
+	public String toString() {
+		return "AdjacencyList [\nverticesList=" + verticesList + ",\nsuperNodes=" + superNodes + "\n]";
+	}
+
 }
