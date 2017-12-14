@@ -28,6 +28,7 @@ import java.util.Set;
  * smallest cut that you ever find.) Write your numeric answer in the space provided. 
  * So e.g., if your answer is 5, just type 5 in the space provided.
 */
+import java.util.concurrent.ThreadLocalRandom;
 
 import com.tolbier.algorithms.week4.kargerMinCut.exceptions.AdjacencyException;
 import com.tolbier.algorithms.week4.kargerMinCut.exceptions.AdjacencyIndexOutOfBoundsException;
@@ -36,13 +37,28 @@ import com.tolbier.algorithms.week4.kargerMinCut.exceptions.AdjacencyVertexNotFo
 public class AdjacencyList {
 	private final Map<Integer,List<Integer>> verticesMap;
 	private final Map<Integer,Set<Integer>> superNodes;
-	private Random rn = new Random();
+	
 	
 	public AdjacencyList() {
 		verticesMap = new HashMap<Integer,List<Integer>>();
 		superNodes = new HashMap<Integer,Set<Integer>>();
 	}
+	
+	public AdjacencyList(Map<Integer, List<Integer>> verticesMap, Map<Integer, Set<Integer>> superNodes) {
+		super();
+		this.verticesMap = verticesMap;
+		this.superNodes = superNodes;
+	}
 
+	private AdjacencyList(AdjacencyList adjacencyList) {
+		
+		verticesMap =  (Map<Integer, List<Integer>>) ((HashMap<Integer,List<Integer>>) adjacencyList.verticesMap).clone();
+		superNodes = (Map<Integer, Set<Integer>>) ((HashMap<Integer,Set<Integer>>) adjacencyList.superNodes).clone();
+	}
+	public AdjacencyList clone() {
+	return new AdjacencyList(this);
+		
+	}
 	public void createVertex(int vertex) {
 		verticesMap.put(vertex, new LinkedList<Integer>());
 		superNodes.put(vertex, new HashSet<Integer>());
@@ -101,16 +117,19 @@ public class AdjacencyList {
 
 	OrderedEdge getRandomEdge() {
 		int numberOfEdges = getNumberOfEdges();
-		int orderToSearch = rn.nextInt(numberOfEdges);
+		int orderToSearch = ThreadLocalRandom.current().nextInt(0,numberOfEdges);
 		return getEdgeFromTotalOrder(orderToSearch);
 	}
 
 	OrderedEdge getEdgeFromTotalOrder(int order) {
-		int vertex=0;
 		int numberOfEdgesInVertex;
-		while ( (numberOfEdgesInVertex =  getNumberOfEdges(vertex))<= order ) {
+		int vertex=0;
+		for (Integer vertexInteger: verticesMap.keySet()) {
+			vertex= vertexInteger.intValue();
+			numberOfEdgesInVertex =  getNumberOfEdges(vertex);
+			if (numberOfEdgesInVertex > order) break;
 			order-=numberOfEdgesInVertex;
-			vertex++;
+			
 		}
 		
 		return new OrderedEdge(vertex,
@@ -165,10 +184,11 @@ public class AdjacencyList {
 	}
 
 	private void addHeadToSuperNodesOfTail(Edge edge) {
+		Set<Integer> superNodeHead = superNodes.get(edge.getHead());
 		superNodes.get(edge.getTail()).add(edge.getHead());
 		superNodes.get(edge.getTail()).
-			addAll(superNodes.get(edge.getHead()));
-		superNodes.get(edge.getHead()).clear();
+			addAll(superNodeHead);
+		superNodes.remove(edge.getHead(),superNodeHead);
 		
 	}
 
@@ -184,5 +204,44 @@ public class AdjacencyList {
 			}
 		}
 	}
+
+	public int getNode(int i) {
+		Integer[] arr=  new Integer[2] ;
+		verticesMap.keySet().toArray(arr);
+		return arr[i];
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((superNodes == null) ? 0 : superNodes.hashCode());
+		result = prime * result + ((verticesMap == null) ? 0 : verticesMap.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AdjacencyList other = (AdjacencyList) obj;
+		if (superNodes == null) {
+			if (other.superNodes != null)
+				return false;
+		} else if (!superNodes.equals(other.superNodes))
+			return false;
+		if (verticesMap == null) {
+			if (other.verticesMap != null)
+				return false;
+		} else if (!verticesMap.equals(other.verticesMap))
+			return false;
+		return true;
+	}
+	
+	
 
 }

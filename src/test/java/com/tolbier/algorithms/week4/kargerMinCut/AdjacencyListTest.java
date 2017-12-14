@@ -13,7 +13,7 @@ import junit.framework.Assert;
 
 public class AdjacencyListTest {
 	AdjacencyList adjacencyList, adjacencyList1 , adjacencyList2,adjacencyList3;
-	
+
 
 	@Before
 	public void init() {
@@ -53,7 +53,8 @@ public class AdjacencyListTest {
 		adjacencyList3.addEdge(new Edge(2,0));
 		adjacencyList3.addEdge(new Edge(2,0));
 		adjacencyList3.addEdge(new Edge(2,1));
-		
+
+				
 	}	
 	@Test
 	public void testCreateAdjacencyList() {
@@ -181,7 +182,7 @@ public class AdjacencyListTest {
 		assertEquals (2,adjacencyList2.countParallelEdges(new Edge(0,1)));
 		assertEquals (1,adjacencyList2.countParallelEdges(new Edge(1,1)));
 		assertEquals (0,adjacencyList2.countParallelEdges(new Edge(0,0)));
-		assertEquals ("{0=[2], 1=[], 2=[]}",adjacencyList2.getSuperNodes().toString());
+		assertEquals ("{0=[2], 1=[]}",adjacencyList2.getSuperNodes().toString());
 	}
 	@Test
 	public void testContractEdge3() {
@@ -189,7 +190,49 @@ public class AdjacencyListTest {
 		assertEquals (2,adjacencyList3.countParallelEdges(new Edge(0,1)));
 		assertEquals (0,adjacencyList3.countParallelEdges(new Edge(1,1)));
 		assertEquals (0,adjacencyList3.countParallelEdges(new Edge(0,0)));
-		assertEquals ("{0=[2], 1=[], 2=[]}",adjacencyList3.getSuperNodes().toString());
+		assertEquals ("{0=[2], 1=[]}",adjacencyList3.getSuperNodes().toString());
+	}
+
+	@Test
+	public void testMinimumCut4() {
+		AdjacencyList adjacencyList =createAdjacencyListForMinimumCut();
+		Cut minimumCut=new Cut();
+		for(int i = 0 ;i<adjacencyList.getNumberOfEdges();i++) {
+			Cut cut = Cut.minimumCut(adjacencyList);
+			if (cut.getNumberOfEdges()<minimumCut.getNumberOfEdges()) {
+				minimumCut=cut;
+			}
+			adjacencyList =createAdjacencyListForMinimumCut();
+		}
+		
+		assertEquals (2,minimumCut.getNumberOfEdges());
+	}
+	
+	private AdjacencyList createAdjacencyListForMinimumCut() {
+		AdjacencyList adjacencyList = new AdjacencyList();
+		adjacencyList.createVertex(0);
+		adjacencyList.addEdge(new Edge(0,1));
+		adjacencyList.addEdge(new Edge(0,2));
+		adjacencyList.addEdge(new Edge(0,3));
+		adjacencyList.addEdge(new Edge(0,4));
+		adjacencyList.createVertex(1);
+		adjacencyList.addEdge(new Edge(1,0));
+		adjacencyList.addEdge(new Edge(1,2));
+		adjacencyList.addEdge(new Edge(1,3));
+		adjacencyList.addEdge(new Edge(1,4));
+		adjacencyList.createVertex(2);
+		adjacencyList.addEdge(new Edge(2,0));
+		adjacencyList.addEdge(new Edge(2,1));
+		adjacencyList.addEdge(new Edge(2,3));
+		adjacencyList.createVertex(3);
+		adjacencyList.addEdge(new Edge(3,0));
+		adjacencyList.addEdge(new Edge(3,1));
+		adjacencyList.addEdge(new Edge(3,2));
+		adjacencyList.createVertex(4);
+		adjacencyList.addEdge(new Edge(4,0));
+		adjacencyList.addEdge(new Edge(4,1));
+		return adjacencyList;
+		
 	}
 
 }

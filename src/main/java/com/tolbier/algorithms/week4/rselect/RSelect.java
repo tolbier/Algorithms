@@ -16,18 +16,6 @@ public class RSelect {
 		return rSelect(a.clone(),0,a.length-1,i);
 	}
 
-//	public int rSelectCopying(int[] a, int i) {
-//		int [] arr = a.clone();
-//		int n = arr.length;
-//		if (n==1) return arr[0] ;
-//		int p = strategy.choosePivot(arr,0,n-1);
-//		Util.swap(arr,0,p);
-// 		int j = partition(arr,0,n-1);
-// 		
-//		if (j==i) return arr[j];
-//		if (j>i) return rSelectCopying(Arrays.copyOfRange(arr, 0, j),i);
-//		return rSelectCopying(Arrays.copyOfRange(arr, j+1, n),i-j-1);
-//	}
 	public int rSelect(int[] a, int l,int r, int i) {
 		int n = r-l+1;
 		if (n==1) return a[l] ;
