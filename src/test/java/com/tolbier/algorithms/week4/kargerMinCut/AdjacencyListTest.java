@@ -12,7 +12,7 @@ import junit.framework.Assert;
 
 
 public class AdjacencyListTest {
-	AdjacencyList adjacencyList, adjacencyList1 , adjacencyList2;
+	AdjacencyList adjacencyList, adjacencyList1 , adjacencyList2,adjacencyList3;
 	
 
 	@Before
@@ -40,6 +40,19 @@ public class AdjacencyListTest {
 		adjacencyList2.createVertex(2);
 		adjacencyList2.addEdge(new Edge(2,0));
 		adjacencyList2.addEdge(new Edge(2,1));
+
+		adjacencyList3 = new AdjacencyList();
+		adjacencyList3.createVertex(0);
+		adjacencyList3.addEdge(new Edge(0,2));
+		adjacencyList3.addEdge(new Edge(0,2));
+		adjacencyList3.addEdge(new Edge(0,1));
+		adjacencyList3.createVertex(1);
+		adjacencyList3.addEdge(new Edge(1,0));
+		adjacencyList3.addEdge(new Edge(1,2));
+		adjacencyList3.createVertex(2);
+		adjacencyList3.addEdge(new Edge(2,0));
+		adjacencyList3.addEdge(new Edge(2,0));
+		adjacencyList3.addEdge(new Edge(2,1));
 		
 	}	
 	@Test
@@ -141,5 +154,39 @@ public class AdjacencyListTest {
 		edge= adjacencyList1.getEdgeFromTotalOrder(2);
 		assertEquals(true,adjacencyList1.edgeExists(edge));
 	}
+	@Test
+	public void testRemoveEdge1() {
+
+		adjacencyList2.removeEdge(new Edge(0,2));
+		assertEquals (1,adjacencyList2.countParallelEdges(new Edge(0,1)));
+		assertEquals (1,adjacencyList2.countParallelEdges(new Edge(1,0)));
+		assertEquals (1,adjacencyList2.countParallelEdges(new Edge(1,1)));
+		assertEquals (1,adjacencyList2.countParallelEdges(new Edge(1,2)));
+		assertEquals (1,adjacencyList2.countParallelEdges(new Edge(2,1)));
+		assertEquals (0,adjacencyList2.countParallelEdges(new Edge(3,2)));
+
+	}
+	@Test
+	public void testCountParallelEdges() {
+		assertEquals (2,adjacencyList3.countParallelEdges(new Edge(0,2)));
+		assertEquals (1,adjacencyList3.countParallelEdges(new Edge(0,1)));
+		assertEquals (1,adjacencyList3.countParallelEdges(new Edge(1,2)));
+		
+	}
+	
+//	@Test
+//	public void testContractEdge2() {
+//		adjacencyList2.contract(new Edge(0,2));
+//		assertEquals (2,adjacencyList2.countParallelEdges(new Edge(0,1)));
+//		assertEquals (1,adjacencyList2.countParallelEdges(new Edge(1,1)));
+//		assertEquals (0,adjacencyList2.countParallelEdges(new Edge(0,0)));
+//	}
+//	@Test
+//	public void testContractEdge3() {
+//		adjacencyList3.contract(new Edge(0,2));
+//		assertEquals (2,adjacencyList3.countParallelEdges(new Edge(0,1)));
+//		assertEquals (0,adjacencyList3.countParallelEdges(new Edge(1,1)));
+//		assertEquals (0,adjacencyList3.countParallelEdges(new Edge(0,0)));
+//	}
 
 }

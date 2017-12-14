@@ -1,6 +1,7 @@
 package com.tolbier.algorithms.week4.kargerMinCut;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -125,4 +126,33 @@ public class AdjacencyList {
 		return "AdjacencyList [\nverticesList=" + verticesList + ",\nsuperNodes=" + superNodes + "\n]";
 	}
 
+	void removeEdge(Edge edge) {
+		removeEdgesFomList(edge.getTail(),edge.getHead());
+		removeEdgesFomList(edge.getHead(),edge.getTail());
+		
+	}
+	void removeEdgesFomList(int tail, int head) {
+		List<Integer> edgesList = verticesList.get(tail);
+		edgesList.removeAll(Arrays.asList(new Integer[] {head}));
+	}
+
+	int countParallelEdges(Edge edge) {
+		int count = 0;
+		List<Integer> edgesList;
+		try {
+			 edgesList = verticesList.get(edge.getTail());
+		}catch(IndexOutOfBoundsException e) {
+			return 0;
+		}
+		for (Integer head : edgesList) {
+			if (head==edge.getHead()) count ++;
+		}
+		return count;
+	}
+
+//	void contract(Edge edge) {
+//		removeEdge(edge);
+//		
+//		
+//	}
 }
