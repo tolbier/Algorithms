@@ -1,7 +1,10 @@
 package com.tolbier.algorithms.week4.kargerMinCut;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -42,6 +45,7 @@ public class AdjacencyList {
 
 	public void createVertex(int vertex) {
 		verticesMap.put(vertex, new LinkedList<Integer>());
+		superNodes.put(vertex, new HashSet<Integer>());
 	}
 	public void addEdge(Edge edge) {
 		verticesMap.get(edge.getTail()).add(edge.getHead());
@@ -131,7 +135,7 @@ public class AdjacencyList {
 		return "AdjacencyList [\nverticesMap=" + verticesMap + ",\nsuperNodes=" + superNodes + "\n]";
 	}
 
-	void removeEdge(Edge edge) {
+	void removeParallelEdges(Edge edge) {
 		removeEdgesFomList(edge.getTail(),edge.getHead());
 		removeEdgesFomList(edge.getHead(),edge.getTail());
 		
@@ -152,9 +156,33 @@ public class AdjacencyList {
 		return count;
 	}
 
-//	void contract(Edge edge) {
-//		removeEdge(edge);
-//		
-//		
-//	}
+	void contract(Edge edge) {
+		removeParallelEdges(edge);
+		moveEdgesByTails(edge);
+		moveEdgesByHeads(edge);
+		addHeadToSuperNodesOfTail(edge);
+		
+	}
+
+	private void addHeadToSuperNodesOfTail(Edge edge) {
+		superNodes.get(edge.getTail()).add(edge.getHead());
+		superNodes.get(edge.getTail()).
+			addAll(superNodes.get(edge.getHead()));
+		superNodes.get(edge.getHead()).clear();
+		
+	}
+
+	void moveEdgesByTails(Edge edge) {
+		verticesMap.get(edge.getTail()).addAll(
+				verticesMap.get(edge.getHead()));
+		verticesMap.remove(edge.getHead());
+	}
+	void moveEdgesByHeads(Edge edge) {
+		for (List<Integer> vertexList: verticesMap.values()) {
+			if (vertexList!=null){
+				Collections.replaceAll(vertexList,edge.getHead(),edge.getTail());
+			}
+		}
+	}
+
 }
