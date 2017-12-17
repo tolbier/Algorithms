@@ -22,7 +22,7 @@ public class App {
 					String line = lineScanner.nextLine();
 					Scanner intScanner= new Scanner(line);
 					int tailVertex = intScanner.nextInt();
-					adjacencyList.createVertex(tailVertex-1);
+					adjacencyList.addVertex(tailVertex-1);
 					while (intScanner.hasNextInt()) {
 						int headVertex = intScanner.nextInt();
 						adjacencyList.addEdge(new Edge(tailVertex-1, headVertex-1));

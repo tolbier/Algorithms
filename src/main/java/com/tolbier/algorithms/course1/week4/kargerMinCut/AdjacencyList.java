@@ -59,12 +59,15 @@ public class AdjacencyList {
 	return new AdjacencyList(this);
 		
 	}
-	public void createVertex(int vertex) {
+	public void addVertex(int vertex) {
 		verticesMap.put(vertex, new LinkedList<Integer>());
 		superNodes.put(vertex, new HashSet<Integer>());
 	}
 	public void addEdge(Edge edge) {
 		verticesMap.get(edge.getTail()).add(edge.getHead());
+	}
+	public void addEdge(int tail, int head) {
+		verticesMap.get(tail).add(head);
 	}
 
 	int getNumberOfVertices() {
@@ -72,7 +75,7 @@ public class AdjacencyList {
 	}
 
 
-	List<Integer> getEdgesListFromVertex(int vertex) {
+	public List<Integer> getEdgesListFromVertex(int vertex) {
 		return verticesMap.get(vertex);
 	}
 

@@ -25,36 +25,36 @@ public class AdjacencyListTest {
 		adjacencyList = new AdjacencyList();
 		
 		adjacencyList1 = new AdjacencyList();
-		adjacencyList1.createVertex(0);
+		adjacencyList1.addVertex(0);
 		adjacencyList1.addEdge(new Edge(0,1));
 		adjacencyList1.addEdge(new Edge(0,1));
-		adjacencyList1.createVertex(1);
+		adjacencyList1.addVertex(1);
 		adjacencyList1.addEdge(new Edge(1,1));
 		adjacencyList1.addEdge(new Edge(1,1));
 		adjacencyList1.addEdge(new Edge(1,1));
 		adjacencyList1.addEdge(new Edge(1,0));
 		
 		adjacencyList2 = new AdjacencyList();
-		adjacencyList2.createVertex(0);
+		adjacencyList2.addVertex(0);
 		adjacencyList2.addEdge(new Edge(0,2));
 		adjacencyList2.addEdge(new Edge(0,1));
-		adjacencyList2.createVertex(1);
+		adjacencyList2.addVertex(1);
 		adjacencyList2.addEdge(new Edge(1,0));
 		adjacencyList2.addEdge(new Edge(1,1));
 		adjacencyList2.addEdge(new Edge(1,2));
-		adjacencyList2.createVertex(2);
+		adjacencyList2.addVertex(2);
 		adjacencyList2.addEdge(new Edge(2,0));
 		adjacencyList2.addEdge(new Edge(2,1));
 
 		adjacencyList3 = new AdjacencyList();
-		adjacencyList3.createVertex(0);
+		adjacencyList3.addVertex(0);
 		adjacencyList3.addEdge(new Edge(0,2));
 		adjacencyList3.addEdge(new Edge(0,2));
 		adjacencyList3.addEdge(new Edge(0,1));
-		adjacencyList3.createVertex(1);
+		adjacencyList3.addVertex(1);
 		adjacencyList3.addEdge(new Edge(1,0));
 		adjacencyList3.addEdge(new Edge(1,2));
-		adjacencyList3.createVertex(2);
+		adjacencyList3.addVertex(2);
 		adjacencyList3.addEdge(new Edge(2,0));
 		adjacencyList3.addEdge(new Edge(2,0));
 		adjacencyList3.addEdge(new Edge(2,1));
@@ -69,18 +69,18 @@ public class AdjacencyListTest {
 	@Test
 	public void testAddVertices() {
 		assertEquals(0,adjacencyList.getNumberOfVertices());
-		adjacencyList.createVertex(0);
+		adjacencyList.addVertex(0);
 		assertEquals(1,adjacencyList.getNumberOfVertices());
-		adjacencyList.createVertex(1);
-		adjacencyList.createVertex(2);
-		adjacencyList.createVertex(3);
+		adjacencyList.addVertex(1);
+		adjacencyList.addVertex(2);
+		adjacencyList.addVertex(3);
 		assertEquals(4,adjacencyList.getNumberOfVertices());
 
 	}
 	@Test
 	public void testAddEdges() {
 		assertEquals(0,adjacencyList.getNumberOfVertices());
-		adjacencyList.createVertex(0);
+		adjacencyList.addVertex(0);
 		adjacencyList.addEdge(new Edge(0,1));
 		List<Integer> edgesFromVertex = adjacencyList.getEdgesListFromVertex(0);
 		assertEquals(1,edgesFromVertex.size());
@@ -89,7 +89,7 @@ public class AdjacencyListTest {
 	@Test
 	public void testAddDuplicatedEdges() {
 		assertEquals(0,adjacencyList.getNumberOfVertices());
-		adjacencyList.createVertex(0);
+		adjacencyList.addVertex(0);
 		adjacencyList.addEdge(new Edge(0,2));
 		adjacencyList.addEdge(new Edge(0,2));
 		List<Integer> edgesFromVertex = adjacencyList.getEdgesListFromVertex(0);
@@ -215,25 +215,25 @@ public class AdjacencyListTest {
 	
 	private AdjacencyList createAdjacencyListForMinimumCut() {
 		AdjacencyList adjacencyList = new AdjacencyList();
-		adjacencyList.createVertex(0);
+		adjacencyList.addVertex(0);
 		adjacencyList.addEdge(new Edge(0,1));
 		adjacencyList.addEdge(new Edge(0,2));
 		adjacencyList.addEdge(new Edge(0,3));
 		adjacencyList.addEdge(new Edge(0,4));
-		adjacencyList.createVertex(1);
+		adjacencyList.addVertex(1);
 		adjacencyList.addEdge(new Edge(1,0));
 		adjacencyList.addEdge(new Edge(1,2));
 		adjacencyList.addEdge(new Edge(1,3));
 		adjacencyList.addEdge(new Edge(1,4));
-		adjacencyList.createVertex(2);
+		adjacencyList.addVertex(2);
 		adjacencyList.addEdge(new Edge(2,0));
 		adjacencyList.addEdge(new Edge(2,1));
 		adjacencyList.addEdge(new Edge(2,3));
-		adjacencyList.createVertex(3);
+		adjacencyList.addVertex(3);
 		adjacencyList.addEdge(new Edge(3,0));
 		adjacencyList.addEdge(new Edge(3,1));
 		adjacencyList.addEdge(new Edge(3,2));
-		adjacencyList.createVertex(4);
+		adjacencyList.addVertex(4);
 		adjacencyList.addEdge(new Edge(4,0));
 		adjacencyList.addEdge(new Edge(4,1));
 		return adjacencyList;
