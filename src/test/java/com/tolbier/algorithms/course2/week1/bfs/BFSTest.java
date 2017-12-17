@@ -6,9 +6,7 @@ import static org.junit.Assert.assertNotNull;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.tolbier.algorithms.course1.week4.kargerMinCut.AdjacencyList;
-import com.tolbier.algorithms.course1.week4.kargerMinCut.Edge;
-import com.tolbier.algorithms.course1.week4.kargerMinCut.Path;
+
 
 public class BFSTest {
 	BFS bfs;
