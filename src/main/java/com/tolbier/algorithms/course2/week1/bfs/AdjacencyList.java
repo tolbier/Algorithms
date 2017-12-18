@@ -116,8 +116,10 @@ public class AdjacencyList {
 
 
 	public int getNode(int i) {
-		Integer[] arr=  new Integer[2] ;
-		verticesMap.keySet().toArray(arr);
+
+		Set<Integer> keySet =verticesMap.keySet();
+		Integer[] arr=  new Integer[keySet.size()] ;
+		keySet.toArray(arr);
 		return arr[i];
 	}
 

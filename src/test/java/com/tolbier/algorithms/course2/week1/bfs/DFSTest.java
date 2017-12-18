@@ -10,8 +10,8 @@ import org.junit.Test;
 
 
 
-public class BFSTest {
-	BFS bfs;
+public class DFSTest {
+	DFS dfs;
 	AdjacencyList adjacencyList;
 
 	@Before
@@ -41,23 +41,17 @@ public class BFSTest {
 		adjacencyList.addEdge(5, 3);
 		adjacencyList.addEdge(5, 4);
 		adjacencyList.addVertex(6);
-		bfs = new BFS();
+		dfs = new DFS();
 	}
 
 	@Test
-	public void testCreateBFS() {
-		assertNotNull(bfs);
+	public void testCreateDFS() {
+		assertNotNull(dfs);
 	}
 
 	@Test
-	public void testBFSsearchSShortestPath() {
-		;
-		assertEquals("[0, 1, 2, 3, 4, 5]", bfs.shortestPath(adjacencyList,0).toString());
-		assertEquals("{0=0, 1=1, 2=1, 3=2, 4=2, 5=3}", bfs.getDistances().toString());
+	public void testDFSsearch() {
+		assertEquals("[0, 1, 3, 2, 4, 5]", dfs.dfs(adjacencyList, 0).toString());
 	}
-	@Test
-	public void testBFSConnectedNodes() {
-		List<List<Integer>> nodeGroups = bfs.getConnectedComponents(adjacencyList);
-		assertEquals("[[0, 1, 2, 3, 4, 5], [6]]", nodeGroups.toString());
-	}
+
 }
