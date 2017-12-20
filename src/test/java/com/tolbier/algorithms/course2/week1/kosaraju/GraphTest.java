@@ -15,13 +15,19 @@ public class GraphTest {
 	@Before
 	public void init() {
 		
-		graph = new Graph(875714);
+		graph = new Graph(2);
+
 	}
 
 	@Test
 	public void testCreateGraph() {
 		assertNotNull(graph);
 	}
-
+	@Test
+	public void testAddArc() {
+		graph.addArc(0, 1);
+		graph.addArc(1, 2);
+		assertEquals("[[[1], [2]]]",graph.toString());
+	}
 	
 }
