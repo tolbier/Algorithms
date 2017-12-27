@@ -2,10 +2,17 @@ package com.tolbier.algorithms.course2.week1.kosaraju;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 
 import com.tolbier.algorithms.course1.week3.quicksort.QuickSort;
 import com.tolbier.algorithms.course1.week3.quicksort.choosepivot.ChoosePivotFirstStrategy;
+import com.tolbier.algorithms.course2.week1.kosaraju.utils.MapUtil;
 
 /*
  * The file contains the edges of a directed graph. Vertices are labeled as positive 
@@ -47,8 +54,10 @@ public class App {
 				
 				if (scanner.hasNextInt()) {
 					int head = scanner.nextInt()-1;
-					graph.addArc(tail, head);
-					graphRev.addArc(head, tail);
+					if (tail!=head) {
+						graph.addArc(tail, head);
+						graphRev.addArc(head, tail);
+					}
 				}
 			}
 			
@@ -58,7 +67,21 @@ public class App {
 		} finally {
 			scanner.close();
 		}
+		Kosaraju kosaraju=new Kosaraju();
+		Map<Integer, Set<Integer>>  sccMap= kosaraju.kosaraju(graph, graphRev);
+		Map<Integer,Integer> sizesMap = createSizesMap(sccMap);
+		Map<Integer,Integer> orderedSizesMap= MapUtil.sortByValue(sizesMap);
+		System.out.println("OK:" + sccMap.size());
+		int i =1;
+	}
 
+	static Map<Integer, Integer> createSizesMap(Map<Integer, Set<Integer>>  sccMap) {
+		Map<Integer, Integer>  sizesMap= new HashMap<Integer,Integer>();
+		for (Integer key:sccMap.keySet()) {
+			int size = sccMap.get(key).size();
+			sizesMap.put(key,size);
+		}
+		return sizesMap;
 	}
 
 }
