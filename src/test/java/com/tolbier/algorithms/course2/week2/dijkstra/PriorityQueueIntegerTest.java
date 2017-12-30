@@ -13,7 +13,7 @@ import org.junit.Test;
 
 
 
-public class PriorityQueueTest {
+public class PriorityQueueIntegerTest {
 	Queue<Integer> heap;
 	
 
