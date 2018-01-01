@@ -1,4 +1,4 @@
-package com.tolbier.algorithms.course2.week2.dijkstra;
+package com.tolbier.algorithms.course2.week2.dijkstra.minimumBottleNeck;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -12,36 +12,15 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Dijkstra {
-	private static Map<Vertex<Integer>, Integer> shortestDistances;
+import com.tolbier.algorithms.course2.week2.dijkstra.Edge;
+import com.tolbier.algorithms.course2.week2.dijkstra.Graph;
+import com.tolbier.algorithms.course2.week2.dijkstra.Vertex;
 
-	public static Map<Vertex<Integer>, Integer> dijkstraStraightShortestDistances(Graph<Integer> graph, int start) {
-		shortestDistances = new ShortestDistances();
-		Set<Vertex<Integer>> explored = new HashSet<Vertex<Integer>>();
-		Vertex<Integer> startVertex = graph.getVertex(start);
-		explored.add(startVertex);
-		shortestDistances.put(startVertex, 0);
-		while (explored.size() < graph.getNumberOfVertices()) {
-			Vertex<Integer> nearestVertex = null;
-			int nearestDistance = Integer.MAX_VALUE;
-			for ( Vertex<Integer> v :explored) {
-				for (Edge<Integer>e: v.getEdges()) {
-					if ( !explored.contains(e.getVertex2())) {
-						int dijkstraDistance = getDijkstraDistance(e);
-						if (dijkstraDistance < nearestDistance) {
-							nearestDistance = dijkstraDistance;
-							nearestVertex = e.getVertex2();
-						}
-					}
-				}
-			}
-			explored.add(nearestVertex);
-			shortestDistances.put(nearestVertex, nearestDistance);
-		}
+public class DijkstraMinimumBottleNeck {
+	private static Map<Vertex<Integer>, Integer> minimumBottleNecks;
 
-		return shortestDistances;
-	}
-	public static Map<Vertex<Integer>, Integer> dijkstraHeapShortestDistances(Graph<Integer> graph, int start) {
+
+	public static Map<Vertex<Integer>, Integer> dijkstraMininumBottleNecks(Graph<Integer> graph, int start) {
 		PriorityQueue<Vertex<Integer>> heap = initDijkstraHeap(graph, start);
 		
 		while (!heap.isEmpty()) {
@@ -50,10 +29,10 @@ public class Dijkstra {
 				Vertex<Integer> v= e.getVertex2();
 				if (heap.contains(v)){
 					heap.remove(v);
-					int dijkstraDistance = getDijkstraDistance(e);
-					Integer vDijkstra = shortestDistances.get(v);
-					if (dijkstraDistance<vDijkstra) {
-						shortestDistances.put(v, dijkstraDistance);
+					int edgeBottleNeck = getEdgeBottleNeck(e);
+					Integer minimumBottleNeck = minimumBottleNecks.get(v);
+					if (edgeBottleNeck<minimumBottleNeck) {
+						minimumBottleNecks.put(v, edgeBottleNeck);
 					}
 					heap.add(v);
 				}
@@ -61,7 +40,7 @@ public class Dijkstra {
 			}
 		}
 
-		return shortestDistances;
+		return minimumBottleNecks;
 	}
 	static PriorityQueue<Vertex<Integer>> initDijkstraHeap(Graph<Integer> graph, int start) {
 		Vertex<Integer> startVertex = graph.getVertex(start);
@@ -70,23 +49,23 @@ public class Dijkstra {
 		return heap;
 	}
 	static void createInitialShortestDistances(Vertex<Integer> startVertex) {
-		shortestDistances = new ShortestDistances();
-		shortestDistances.put(startVertex, 0);
+		minimumBottleNecks = new MinimumBottleNecks();
+		minimumBottleNecks.put(startVertex, 0);
 	}
 	static PriorityQueue<Vertex<Integer>> createInitialHeap(Graph<Integer> graph) {
-		Comparator<Vertex<Integer>> comparator = new VertexDistanceComparator<Integer>(shortestDistances);
+		Comparator<Vertex<Integer>> comparator = new VertexMinimumBottleNeckComparator<Integer>(minimumBottleNecks);
 		PriorityQueue<Vertex<Integer>> heap = 
 	            new PriorityQueue<Vertex<Integer>>(comparator);
 		addAllGraphVectorsToHeap(graph, heap);
 		return heap;
 	}
 	static void addAllGraphVectorsToHeap(Graph<Integer> graph, PriorityQueue<Vertex<Integer>> heap) {
-			heap.addAll(graph.getAllVertex());
+		heap.addAll(graph.getAllVertex() );
 	}
 
 	
-	private static int getDijkstraDistance(Edge<Integer> edge) {
-		return shortestDistances.get(edge.getVertex1()) + edge.getWeight();
+	private static int getEdgeBottleNeck(Edge<Integer> edge) {
+		return Math.max(minimumBottleNecks.get(edge.getVertex1()), edge.getWeight());
 	}
 
 	static Graph<Integer> getWeightedGraph(String filePath) {
@@ -115,11 +94,6 @@ public class Dijkstra {
 					}
 
 				}
-				/*
-				 * //adjacencyList.addVertex(tailVertex - 1); while (intScanner.hasNextInt()) {
-				 * int headVertex = intScanner.nextInt(); int i =1; //adjacencyList.addEdge(new
-				 * Edge(tailVertex - 1, headVertex - 1)); } intScanner.close();
-				 */
 				vertexScanner.close();
 			}
 		} catch (FileNotFoundException e) {

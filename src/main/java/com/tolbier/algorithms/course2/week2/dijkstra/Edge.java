@@ -24,15 +24,15 @@ public class Edge<T> {
 	        this.isDirected = isDirected;
 	    }
 	    
-	    Vertex<T> getVertex1(){
+	    public Vertex<T> getVertex1(){
 	        return vertex1;
 	    }
 	    
-	    Vertex<T> getVertex2(){
+	    public Vertex<T> getVertex2(){
 	        return vertex2;
 	    }
 	    
-	    int getWeight(){
+	    public int getWeight(){
 	        return weight;
 	    }
 	    
