@@ -3,7 +3,6 @@ package com.tolbier.algorithms.course2.week2.dijkstra;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.PriorityQueue;
