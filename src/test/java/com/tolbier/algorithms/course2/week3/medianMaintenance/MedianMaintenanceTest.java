@@ -20,12 +20,12 @@ public class MedianMaintenanceTest {
 	public void testCreateMedianMaintenance1() {
 		assertNotNull(medianMaintenance);
 	}
-	//@Test
+	@Test
 	public void testMedianMaintenance1() {
 		int result=medianMaintenance.calculate("resources/course2/week3/Median.txt"); 
 		assertEquals(1213, result);
 	}
-	//@Test
+	@Test
 	public void testMedianMaintenanceTest1() {
 		int result=medianMaintenance.calculate("resources/course2/week3/test1.txt"); 
 		assertEquals(142, result);

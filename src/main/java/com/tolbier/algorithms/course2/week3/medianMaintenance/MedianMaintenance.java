@@ -33,15 +33,11 @@ public class MedianMaintenance {
 			while (intScanner.hasNextInt()) {
 				Integer number = intScanner.nextInt();
 				if (number.compareTo(median)>0) {
-					heapHigh.add(number);
-					if (heapHigh.size()>heapLow.size()) {
-						heapLow.add(heapHigh.poll());
-					}
+					addNumberToHeap(heapHigh, number);
+					exchangeIfHeapOverloaded(heapHigh,heapLow,0);
 				}else {
-					heapLow.add(number);
-					if (heapLow.size()>heapHigh.size()+1) {
-						heapHigh.add(heapLow.poll());
-					}
+					addNumberToHeap(heapLow, number);
+					exchangeIfHeapOverloaded(heapLow,heapHigh,+1);
 				}
 				median= heapLow.peek();
 				result= (result +median)%10000;
@@ -53,6 +49,15 @@ public class MedianMaintenance {
 			intScanner.close();
 		}
 		return result;
+	}
+	void exchangeIfHeapOverloaded(PriorityQueue<Integer>  heap1,PriorityQueue<Integer> heap2,int sizeDiff) {
+		if (heap1.size()>heap2.size()+sizeDiff) {
+			heap2.add(heap1.poll());
+		}
+	}
+
+	void addNumberToHeap(PriorityQueue<Integer> heap, Integer number) {
+		heap.add(number);
 	}
 
 }
