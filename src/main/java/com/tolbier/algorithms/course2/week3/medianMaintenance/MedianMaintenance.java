@@ -6,10 +6,10 @@ import java.util.Comparator;
 import java.util.PriorityQueue;
 import java.util.Scanner;
 public class MedianMaintenance {
-
+	PriorityQueue<Integer> heapLow=null, heapHigh=null;
 	public int calculate(String filePath) {
 		int result = 0;
-		PriorityQueue<Integer> heapLow=null, heapHigh=null;
+		
 		Scanner intScanner = null;
 		try {
 			intScanner = new Scanner(new File(filePath));
@@ -32,13 +32,17 @@ public class MedianMaintenance {
 			Integer median= Integer.MAX_VALUE;
 			while (intScanner.hasNextInt()) {
 				Integer number = intScanner.nextInt();
-				if (number.compareTo(median)>0) {
-					addNumberToHeap(heapHigh, number);
-					exchangeIfHeapOverloaded(heapHigh,heapLow,0);
-				}else {
-					addNumberToHeap(heapLow, number);
-					exchangeIfHeapOverloaded(heapLow,heapHigh,+1);
+				PriorityQueue<Integer> targetHeap=heapHigh;
+				PriorityQueue<Integer> restHeap=heapLow;
+				int d=0;
+				if (number.compareTo(median)<0) {
+					d=1; targetHeap=heapLow; restHeap=heapHigh;
 				}
+				addNumberToHeap(targetHeap, number);
+				if (heapOverloaded(targetHeap,restHeap,d)) {
+					exchangeFromHeap(targetHeap,restHeap);
+				}
+
 				median= heapLow.peek();
 				result= (result +median)%10000;
 			}
@@ -50,12 +54,12 @@ public class MedianMaintenance {
 		}
 		return result;
 	}
-	void exchangeIfHeapOverloaded(PriorityQueue<Integer>  heap1,PriorityQueue<Integer> heap2,int sizeDiff) {
-		if (heap1.size()>heap2.size()+sizeDiff) {
-			heap2.add(heap1.poll());
-		}
+	void exchangeFromHeap(PriorityQueue<Integer>  heap1,PriorityQueue<Integer> heap2) {
+		heap2.add(heap1.poll());
 	}
-
+	boolean heapOverloaded(PriorityQueue<Integer>  heap1,PriorityQueue<Integer> heap2,int sizeDiff) {
+		return heap1.size()>heap2.size()+sizeDiff;
+	}
 	void addNumberToHeap(PriorityQueue<Integer> heap, Integer number) {
 		heap.add(number);
 	}
