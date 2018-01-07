@@ -5,7 +5,7 @@ import java.io.FileNotFoundException;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 import java.util.Scanner;
-public class MedianMaintenance {
+public class MedianMaintenanceHeap {
 	PriorityQueue<Integer> heapLow=null, heapHigh=null;
 	public int calculate(String filePath) {
 		int result = 0;

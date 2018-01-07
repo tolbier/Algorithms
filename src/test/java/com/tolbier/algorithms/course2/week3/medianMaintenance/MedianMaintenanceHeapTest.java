@@ -9,12 +9,12 @@ import org.junit.Test;
 
 
 
-public class MedianMaintenanceTest {
-	MedianMaintenance medianMaintenance;
+public class MedianMaintenanceHeapTest {
+	MedianMaintenanceHeap medianMaintenance;
 
 	@Before
 	public void init() {
-		medianMaintenance = new MedianMaintenance();
+		medianMaintenance = new MedianMaintenanceHeap();
 	}
 	@Test
 	public void testCreateMedianMaintenance1() {
