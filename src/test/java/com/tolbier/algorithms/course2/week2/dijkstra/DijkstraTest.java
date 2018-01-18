@@ -7,6 +7,9 @@ import java.util.Map;
 
 import org.junit.Test;
 
+import com.tolbier.algorithms.commons.Graph;
+import com.tolbier.algorithms.commons.Vertex;
+
 
 
 public class DijkstraTest {

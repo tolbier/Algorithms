@@ -2,6 +2,8 @@ package com.tolbier.algorithms.course2.week2.dijkstra;
 
 import java.util.HashMap;
 
+import com.tolbier.algorithms.commons.Vertex;
+
 public class ShortestDistances extends HashMap<Vertex<Integer>, Integer>{
 
 	/**

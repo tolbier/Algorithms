@@ -2,7 +2,7 @@ package com.tolbier.algorithms.course2.week2.dijkstra.minimumBottleNeck;
 
 import java.util.HashMap;
 
-import com.tolbier.algorithms.course2.week2.dijkstra.Vertex;
+import com.tolbier.algorithms.commons.Vertex;
 
 public class MinimumBottleNecks extends HashMap<Vertex<Integer>, Integer>{
 

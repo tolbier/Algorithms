@@ -11,6 +11,11 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.tolbier.algorithms.commons.Edge;
+import com.tolbier.algorithms.commons.Graph;
+import com.tolbier.algorithms.commons.Vertex;
+import com.tolbier.algorithms.commons.VertexDistanceComparator;
+
 public class Dijkstra {
 	private static Map<Vertex<Integer>, Integer> shortestDistances;
 

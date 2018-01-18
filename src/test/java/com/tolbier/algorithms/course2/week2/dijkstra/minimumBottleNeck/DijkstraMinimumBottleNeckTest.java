@@ -7,8 +7,8 @@ import java.util.Map;
 
 import org.junit.Test;
 
-import com.tolbier.algorithms.course2.week2.dijkstra.Graph;
-import com.tolbier.algorithms.course2.week2.dijkstra.Vertex;
+import com.tolbier.algorithms.commons.Graph;
+import com.tolbier.algorithms.commons.Vertex;
 
 
 

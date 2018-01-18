@@ -1,4 +1,4 @@
-package com.tolbier.algorithms.course2.week2.dijkstra;
+package com.tolbier.algorithms.commons;
 
 public class Edge<T> {
 	  private boolean isDirected = false;

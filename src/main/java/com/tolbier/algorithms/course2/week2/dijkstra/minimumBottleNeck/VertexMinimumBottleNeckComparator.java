@@ -3,7 +3,7 @@ package com.tolbier.algorithms.course2.week2.dijkstra.minimumBottleNeck;
 import java.util.Comparator;
 import java.util.Map;
 
-import com.tolbier.algorithms.course2.week2.dijkstra.Vertex;
+import com.tolbier.algorithms.commons.Vertex;
 
 public class VertexMinimumBottleNeckComparator<T> implements Comparator<Vertex<T>> {
 	Map<Vertex<T>, Integer> minimumBottleNeck;

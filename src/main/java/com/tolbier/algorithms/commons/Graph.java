@@ -1,4 +1,4 @@
-package com.tolbier.algorithms.course2.week2.dijkstra;
+package com.tolbier.algorithms.commons;
 
 import java.util.ArrayList;
 import java.util.Collection;

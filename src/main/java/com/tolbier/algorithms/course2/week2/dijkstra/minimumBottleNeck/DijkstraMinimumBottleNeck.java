@@ -12,9 +12,9 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.tolbier.algorithms.course2.week2.dijkstra.Edge;
-import com.tolbier.algorithms.course2.week2.dijkstra.Graph;
-import com.tolbier.algorithms.course2.week2.dijkstra.Vertex;
+import com.tolbier.algorithms.commons.Edge;
+import com.tolbier.algorithms.commons.Graph;
+import com.tolbier.algorithms.commons.Vertex;
 
 public class DijkstraMinimumBottleNeck {
 	private static Map<Vertex<Integer>, Integer> minimumBottleNecks;
