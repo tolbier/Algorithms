@@ -1,5 +1,7 @@
 package com.tolbier.algorithms.course3.week2.kCluster1;
 
+import com.tolbier.algorithms.commons.UnionFind;
+
 public class VertexUnionFind  implements IUnionFind{
 
 	IUnionFind uf; 
