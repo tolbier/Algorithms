@@ -53,7 +53,7 @@ public class UnionFind implements IUnionFind
         if (i < 0 || i > parent.length)
             throw new NoSuchElementException("Invalid element");
         
-        return root(i);
+        return root1(i);
     }
     
     /**
@@ -141,7 +141,7 @@ public class UnionFind implements IUnionFind
      */
     public int rank(int u)
     {
-        u = root(u);
+        u = root1(u);
         return rank[u];
     }
 

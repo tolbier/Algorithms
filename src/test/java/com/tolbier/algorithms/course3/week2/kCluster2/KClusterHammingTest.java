@@ -39,8 +39,8 @@ public class KClusterHammingTest {
 			"19_32_14",
 			"20_32_12",
 			"21_32_10",
-/*			"22_32_8",
-			"23_64_22",
+			"22_32_8",
+/*			"23_64_22",
 			"24_64_20",
 			"25_64_18",
 			"26_64_16",
@@ -128,7 +128,7 @@ public class KClusterHammingTest {
 		
 	}
 	//@Test
-	public void testMaximumSpacing_clustering1() {
+	public void testGetKForSpacing3UF_clustering_big() {
 		kCluster = new KClusterHamming("resources/course3/week2/exercise2/clustering_big.txt");
 
 		assertEquals(6118, kCluster.getKForSpacing3UF());
