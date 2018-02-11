@@ -8,7 +8,8 @@ public class KnapSack {
 	int size =0;
 	int n =0;
 	Scanner fileScanner = null;
-	long [][] sackArr ;
+	long prevSackArr[] ;
+	long sackArr[] ;
 	public KnapSack(String fileName) {
 		initScanFile(fileName);
 		scanFile();
@@ -18,22 +19,25 @@ public class KnapSack {
 		for (int i = 1;i<=n;i++){
 			long value = fileScanner.nextLong();
 			int weight = fileScanner.nextInt();
-			updateSack(i,value,weight);
+			updateSack(value,weight);
 			
 		}			
 		
 	}
 
-	private void updateSack(int i, long value, int weight) {
+	private void updateSack(long value, int weight) {
+ 		sackArr = new long[size+1];
 
 		for (int x=0; x<=size;x++){
-			long refValue1 = sackArr[i-1][x];
-			sackArr[i][x]=Math.max(refValue1,x<weight?0:sackArr[i-1][x-weight]+value);		
+			long prevValue = prevSackArr[x];
+			sackArr[x]=Math.max(prevValue,x<weight?0:prevSackArr[x-weight]+value);		
 		}
+
+		prevSackArr = sackArr;
 	}
 
 	public long getValue() {
-		return sackArr[n][size];
+		return sackArr[size];
 	}
 	private void initScanFile(String fileName) {
 
@@ -41,17 +45,12 @@ public class KnapSack {
 			fileScanner = new Scanner(new File(fileName));
 		    size = fileScanner.nextInt();
 			n = fileScanner.nextInt();
-			sackArr = new long[n+1][size+1];
-			//initItemZeroFromSackArr();
+			prevSackArr = new long[size+1];
+			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
 
-	private void initItemZeroFromSackArr() {
-		for (int x =0; x<=n;x++){
-			sackArr[0][x]=0;
-		}
-		
-	}
+	
 }

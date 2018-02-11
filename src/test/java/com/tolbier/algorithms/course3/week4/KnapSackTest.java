@@ -13,30 +13,30 @@ import com.tolbier.algorithms.commons.Node;
 
 public class KnapSackTest {
 	String[] testNames= new String[] {
-//			"1_4_4",
-//			"2_4_4",
-//			"3_4_4",
-//			"4_4_4",
-//			"5_10_10",
-//			"6_10_10",
-//			"7_10_10",
-//			"8_10_10",
-//			"9_100_10",
-//			"10_100_10",
-//			"11_100_10",
-//			"12_100_10",
-//			"13_100_100",
-//			"14_100_100",
-//			"15_100_100",
-//			"16_100_100",
-//			"17_100_1000",
-//			"18_100_1000",
-//			"19_100_1000",
-//			"20_100_1000",
-//			"21_1000_100",
-//			"22_1000_100",
-//			"23_1000_100",
-//			"24_1000_100",
+			"1_4_4",
+			"2_4_4",
+			"3_4_4",
+			"4_4_4",
+			"5_10_10",
+			"6_10_10",
+			"7_10_10",
+			"8_10_10",
+			"9_100_10",
+			"10_100_10",
+			"11_100_10",
+			"12_100_10",
+			"13_100_100",
+			"14_100_100",
+			"15_100_100",
+			"16_100_100",
+			"17_100_1000",
+			"18_100_1000",
+			"19_100_1000",
+			"20_100_1000",
+			"21_1000_100",
+			"22_1000_100",
+			"23_1000_100",
+			"24_1000_100",
 //			"25_1000_1000",
 //			"26_1000_1000",
 //			"27_1000_1000",
@@ -49,7 +49,7 @@ public class KnapSackTest {
 //			"34_100000_2000",
 //			"35_100000_2000",
 //			"36_100000_2000",
-			"37_1000000_2000",
+//			"37_1000000_2000",
 //			"38_1000000_2000",
 //			"39_1000000_2000",
 //			"40_1000000_2000",
@@ -72,13 +72,13 @@ public class KnapSackTest {
 	//@Test
 	public void testKnapSack1() {
 		KnapSack  knapSack = new KnapSack("resources/course3/week4/knapsack1.txt");
-		assertEquals(0,knapSack.getValue());
+		assertEquals(2493893,knapSack.getValue());
 	}
 	
 	//@Test
 	public void testKnapSackBig() {
 		KnapSack  knapSack = new KnapSack("resources/course3/week4/knapsack_big.txt");
-		assertEquals(0,knapSack.getValue());
+		assertEquals(4243395,knapSack.getValue());
 	}
 
 	private long getResultForTest(String testId) {
