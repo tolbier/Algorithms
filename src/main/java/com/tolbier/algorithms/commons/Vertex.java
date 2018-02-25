@@ -7,6 +7,7 @@ public class Vertex<T> {
 	
     long id;
     private T data;
+    private List<Edge<T>> inEdges = new ArrayList<>();
     private List<Edge<T>> edges = new ArrayList<>();
     private List<Vertex<T>> adjacentVertex = new ArrayList<>();
     
@@ -28,9 +29,12 @@ public class Vertex<T> {
     
     public void addAdjacentVertex(Edge<T> e, Vertex<T> v){
         edges.add(e);
+        e.getVertex2().addInEdge(e);
         adjacentVertex.add(v);
     }
-    
+    private void addInEdge(Edge<T> inEdge) {
+    	inEdges.add(inEdge);
+    }
     public String toString(){
         return String.valueOf(id);
     }
@@ -42,9 +46,16 @@ public class Vertex<T> {
     public List<Edge<T>> getEdges(){
         return edges;
     }
+    public List<Edge<T>> getInEdges(){
+        return inEdges;
+    }
     
     public int getDegree(){
         return edges.size();
+    }
+
+    public int getInDegree(){
+        return inEdges.size();
     }
     
     @Override

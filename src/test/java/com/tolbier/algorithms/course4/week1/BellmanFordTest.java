@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -11,13 +12,17 @@ import org.junit.Test;
 
 import com.tolbier.algorithms.commons.Graph;
 import com.tolbier.algorithms.commons.Node;
+import com.tolbier.algorithms.course4.week1.exceptions.HasNegativeCyclesException;
 
 public class BellmanFordTest {
-	String[] testNames = new String[] { "1_2", "2_2",
-			// "3_2",
-			// "4_2",
-			// "5_4",
-			// "6_4",
+	String[] testNames = new String[] {
+			"",
+			"1_2", 
+			"2_2",
+			"3_2",
+			"4_2",
+			"5_4",
+			"6_4",
 			// "7_4",
 			// "8_4",
 			// "9_8",
@@ -61,32 +66,47 @@ public class BellmanFordTest {
 
 	@Test
 	public void testNullResponse() {
-		int i = 0;
+		int i = 1;
 
 		assertEquals(null, getResultForTest(i));
 	}
 	@Test
-	public void testGraphLoad() {
-		int i = 0;
-		BellmanFord bellmanFord = new BellmanFord(getInputFileName(i));
-		
-		assertEquals("1 1 -73\n1 2 51\n2 2 44\n2 2 31\n", bellmanFord.getGraph().toString());
-	}
-	@Test
 	public void testNotNullResponse() {
-		int i = 1;
+		int i = 2;
 
 		assertEquals(-66, getResultForTest(i).longValue());
 	}
+
 	
-	//@Test
-	public void testMwis_multiple() {
-		for (int i = 0; i < testNames.length; i++) {
-			BellmanFord bellmanFord = new BellmanFord(getInputFileName(i));
-			assertEquals("Id:" + testNames[i] + " FAILED", getResultForTest(i),
-					bellmanFord.getShortestPathLength());
-		}
+	@Test(expected = HasNegativeCyclesException.class)
+	public void testTestCase1() throws HasNegativeCyclesException {
+			Graph<Integer> graph = GraphReader.createDirectedGraphFromFilePath(getInputFileName(1));
+			BellmanFord bellmanFord = new BellmanFord(graph, 1);
 	}
+	@Test
+	public void testTestCase2() throws HasNegativeCyclesException {
+			Graph<Integer> graph = GraphReader.createDirectedGraphFromFilePath(getInputFileName(2));
+			BellmanFord bellmanFord = new BellmanFord(graph, 1);
+			assertEquals(0,	bellmanFord.getShortestPathLengthTo(1).intValue());
+			assertEquals(-66,	bellmanFord.getShortestPathLengthTo(2).intValue());
+			assertEquals("[0, 0, -66]",Arrays.toString(bellmanFord.getLengthsArr()));
+	}
+	@Test(expected = HasNegativeCyclesException.class)
+	public void testTestCase5() throws HasNegativeCyclesException {
+			Graph<Integer> graph = GraphReader.createDirectedGraphFromFilePath(getInputFileName(5));
+			BellmanFord bellmanFord = new BellmanFord(graph, 1);
+	}
+	@Test
+	public void testTestCase6() throws HasNegativeCyclesException {
+			Graph<Integer> graph = GraphReader.createDirectedGraphFromFilePath(getInputFileName(6));
+			BellmanFord bellmanFord = new BellmanFord(graph, 1);
+			assertEquals(0,	bellmanFord.getShortestPathLengthTo(1).intValue());
+			assertEquals(-6,	bellmanFord.getShortestPathLengthTo(2).intValue());
+			assertEquals(-12,	bellmanFord.getShortestPathLengthTo(3).intValue());
+			assertEquals(Integer.MAX_VALUE,	bellmanFord.getShortestPathLengthTo(4).intValue());
+			assertEquals("[0, 0, -6, -12, "+Integer.MAX_VALUE+"]",Arrays.toString(bellmanFord.getLengthsArr()));
+	}
+
 	private String getInputFileName(int i) {
 		return "resources/course4/week1/testcases/input_random_" + testNames[i] + ".txt";
 	}
