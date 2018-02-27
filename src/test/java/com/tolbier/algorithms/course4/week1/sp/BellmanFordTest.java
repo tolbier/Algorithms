@@ -1,4 +1,4 @@
-package com.tolbier.algorithms.course4.week1;
+package com.tolbier.algorithms.course4.week1.sp;
 
 import static org.junit.Assert.*;
 
@@ -12,6 +12,7 @@ import org.junit.Test;
 
 import com.tolbier.algorithms.commons.Graph;
 import com.tolbier.algorithms.commons.Node;
+import com.tolbier.algorithms.course4.week1.GraphReader;
 import com.tolbier.algorithms.course4.week1.exceptions.HasNegativeCyclesException;
 
 public class BellmanFordTest {
@@ -64,19 +65,6 @@ public class BellmanFordTest {
 
 	};
 
-	@Test
-	public void testNullResponse() {
-		int i = 1;
-
-		assertEquals(null, getResultForTest(i));
-	}
-	@Test
-	public void testNotNullResponse() {
-		int i = 2;
-
-		assertEquals(-66, getResultForTest(i).longValue());
-	}
-
 	
 	@Test(expected = HasNegativeCyclesException.class)
 	public void testTestCase1() throws HasNegativeCyclesException {
@@ -106,7 +94,15 @@ public class BellmanFordTest {
 			assertEquals(Integer.MAX_VALUE,	bellmanFord.getShortestPathLengthTo(4).intValue());
 			assertEquals("[0, 0, -6, -12, "+Integer.MAX_VALUE+"]",Arrays.toString(bellmanFord.getLengthsArr()));
 	}
-
+	@Test
+	public void testTestCase2withVertex0() throws HasNegativeCyclesException {
+			Graph<Integer> graph = GraphReader.createDirectedGraphFromFilePath(getInputFileName(2));
+			graph.addEdge(0, 1, 0);
+			BellmanFord bellmanFord = new BellmanFord(graph, 1);
+			assertEquals(0,	bellmanFord.getShortestPathLengthTo(1).intValue());
+			assertEquals(-66,	bellmanFord.getShortestPathLengthTo(2).intValue());
+			assertEquals("[0, 0, -66]",Arrays.toString(bellmanFord.getLengthsArr()));
+	}
 	private String getInputFileName(int i) {
 		return "resources/course4/week1/testcases/input_random_" + testNames[i] + ".txt";
 	}

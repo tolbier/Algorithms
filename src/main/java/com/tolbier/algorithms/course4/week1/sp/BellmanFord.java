@@ -1,7 +1,6 @@
-package com.tolbier.algorithms.course4.week1;
+package com.tolbier.algorithms.course4.week1.sp;
 
 import java.util.Arrays;
-import java.util.List;
 
 import com.tolbier.algorithms.commons.Edge;
 import com.tolbier.algorithms.commons.Graph;
@@ -12,7 +11,7 @@ public class BellmanFord {
 	Graph<Integer> graph ;
 	int source ;
 	int prevLengthsArr[], currLengthsArr[];
-	private boolean hasNegativeCycles; 
+
 	public BellmanFord(Graph<Integer> graph, int source) throws HasNegativeCyclesException {
 		this.graph= graph;
 		this.source = source;
@@ -31,13 +30,13 @@ public class BellmanFord {
 		 *                         min( A[i-1,w] + Ce) for edge e(w,v) ) 
 		 */		
 		int n = graph.getNumberOfVertices();
-
+		int maxId=(int)graph.getMaxId();
 		currLengthsArr= createInitCurrLengthArr(n);
 		int i =1;
 		boolean prevAndCurrAreEqual=false;
 		while (i<=n && !prevAndCurrAreEqual) {
 			prevLengthsArr=currLengthsArr;
-			currLengthsArr=new int[n+1];
+			currLengthsArr=new int[maxId+1];
 			for (Vertex<Integer> v :graph.getAllVertex()) {
 				int vId=(int)v.getId();
 				int case1Value= prevLengthsArr[vId]; // a[i-1,v]
@@ -86,7 +85,7 @@ public class BellmanFord {
 		return currLengthsArr[vertexId];
 	}
 
-	protected int[] getLengthsArr() {
+	public int[] getLengthsArr() {
 		return currLengthsArr;
 	}
 

@@ -11,7 +11,7 @@ public class Graph <T>{
     private List<Edge<T>> allEdges;
     private Map<Long,Vertex<T>> allVertex;
     boolean isDirected = false;
-    
+ 
     public Graph(boolean isDirected){
         allEdges = new ArrayList<Edge<T>>();
         allVertex = new HashMap<Long,Vertex<T>>();
@@ -22,13 +22,22 @@ public class Graph <T>{
         addEdge(id1,id2,0);
     }
     
+    public long getMaxId() {
+    	long maxId= Long.MIN_VALUE;
+    	for (Long id :allVertex.keySet()) {
+    		if (id>maxId) maxId = id;
+    	}
+    	return maxId;
+    }
+    
     //This works only for directed graph because for undirected graph we can end up
     //adding edges two times to allEdges
     public void addVertex(Vertex<T> vertex){
         if(allVertex.containsKey(vertex.getId())){
             return;
         }
-        allVertex.put(vertex.getId(), vertex);
+       
+        putVertex(vertex.getId(), vertex);
         for(Edge<T> edge : vertex.getEdges()){
             allEdges.add(edge);
         }
@@ -39,9 +48,13 @@ public class Graph <T>{
             return allVertex.get(id);
         }
         Vertex<T> v = new Vertex<T>(id);
-        allVertex.put(id, v);
+        putVertex(id, v);
         return v;
     }
+
+	private void putVertex(long id, Vertex<T> vertex) {
+		allVertex.put(id, vertex);
+	}
     
     public Vertex<T> getVertex(long id){
         return allVertex.get(id);
@@ -53,14 +66,14 @@ public class Graph <T>{
             vertex1 = allVertex.get(id1);
         }else{
             vertex1 = new Vertex<T>(id1);
-            allVertex.put(id1, vertex1);
+            putVertex(id1, vertex1);
         }
         Vertex<T> vertex2 = null;
         if(allVertex.containsKey(id2)){
             vertex2 = allVertex.get(id2);
         }else{
             vertex2 = new Vertex<T>(id2);
-            allVertex.put(id2, vertex2);
+            putVertex(id2, vertex2);
         }
 
         Edge<T> edge = new Edge<T>(vertex1,vertex2,isDirected,weight);

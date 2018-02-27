@@ -35,7 +35,9 @@ public class Edge<T> {
 	    public int getWeight(){
 	        return weight;
 	    }
-	    
+	    public void setWeight(int weight){
+	        this.weight=weight;
+	    }
 	    public boolean isDirected(){
 	        return isDirected;
 	    }
