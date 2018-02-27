@@ -112,32 +112,6 @@ public class APSPTest {
 			assertEquals(0, apsp.getShortestPathLength().intValue());
 	}
 
-//	@Test
-//	public void testTestCase2() throws HasNegativeCyclesException {
-//		Graph<Integer> graph = GraphReader.createDirectedGraphFromFilePath(getInputFileName(2));
-//		BellmanFord bellmanFord = new BellmanFord(graph, 1);
-//		assertEquals(0, bellmanFord.getShortestPathLengthTo(1).intValue());
-//		assertEquals(-66, bellmanFord.getShortestPathLengthTo(2).intValue());
-//		assertEquals("[0, 0, -66]", Arrays.toString(bellmanFord.getLengthsArr()));
-//	}
-//
-//	@Test(expected = HasNegativeCyclesException.class)
-//	public void testTestCase5() throws HasNegativeCyclesException {
-//		Graph<Integer> graph = GraphReader.createDirectedGraphFromFilePath(getInputFileName(5));
-//		BellmanFord bellmanFord = new BellmanFord(graph, 1);
-//	}
-//
-//	@Test
-//	public void testTestCase6() throws HasNegativeCyclesException {
-//		Graph<Integer> graph = GraphReader.createDirectedGraphFromFilePath(getInputFileName(6));
-//		BellmanFord bellmanFord = new BellmanFord(graph, 1);
-//		assertEquals(0, bellmanFord.getShortestPathLengthTo(1).intValue());
-//		assertEquals(-6, bellmanFord.getShortestPathLengthTo(2).intValue());
-//		assertEquals(-12, bellmanFord.getShortestPathLengthTo(3).intValue());
-//		assertEquals(Integer.MAX_VALUE, bellmanFord.getShortestPathLengthTo(4).intValue());
-//		assertEquals("[0, 0, -6, -12, " + Integer.MAX_VALUE + "]", Arrays.toString(bellmanFord.getLengthsArr()));
-//	}
-
 	private String getInputFileName(int i) {
 		return "resources/course4/week1/testcases/input_random_" + testNames[i] + ".txt";
 	}
