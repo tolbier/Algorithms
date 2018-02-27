@@ -23,48 +23,48 @@ public class APSPTest {
 			"",
 			"1_2", 
 			"2_2",
-//			"3_2",
-//			"4_2",
-//			 "5_4",
-//			 "6_4",
-//			 "7_4",
-//			 "8_4",
-//			 "9_8",
-//			 "10_8",
-//			 "11_8",
-//			 "12_8",
-			// "13_16",
-			// "14_16",
-			// "15_16",
-			// "16_16",
-			// "17_32",
-			// "18_32",
-			// "19_32",
-			// "20_32",
-			// "21_64",
-			// "22_64",
-			// "23_64",
-			// "24_64",
-			// "25_128",
-			// "26_128",
-			// "27_128",
-			// "28_128",
-			// "29_256",
-			// "30_256",
-			// "31_256",
-			// "32_256",
-			// "33_512",
-			// "34_512",
-			// "35_512",
-			// "36_512",
-			// "37_1024",
-			// "38_1024",
-			// "39_1024",
-			// "40_1024",
-			// "41_2048",
-			// "42_2048",
-			// "43_2048",
-			// "44_2048",
+			"3_2",
+			"4_2",
+			 "5_4",
+			 "6_4",
+			 "7_4",
+			 "8_4",
+			 "9_8",
+			 "10_8",
+			 "11_8",
+			 "12_8",
+			 "13_16",
+			 "14_16",
+			 "15_16",
+			 "16_16",
+			 "17_32",
+			 "18_32",
+			 "19_32",
+			 "20_32",
+			 "21_64",
+			 "22_64",
+			 "23_64",
+			 "24_64",
+//			 "25_128",
+//			 "26_128",
+//			 "27_128",
+//			 "28_128",
+//			 "29_256",
+//			 "30_256",
+//			 "31_256",
+//			 "32_256",
+//			 "33_512",
+//			 "34_512",
+//			 "35_512",
+//			 "36_512",
+//			 "37_1024",
+//			 "38_1024",
+//			 "39_1024",
+//			 "40_1024",
+//			 "41_2048",
+//			 "42_2048",
+//			 "43_2048",
+//			 "44_2048",
 
 	};
 
@@ -83,7 +83,7 @@ public class APSPTest {
 	}
 
 	@Test
-	public void testMwis_multiple() {
+	public void testAPSP_multiple() {
 		for (int i = 1; i < testNames.length; i++) {
 			APSP apsp = new APSP(new JohnsonAlgorithm(getInputFileName(i)));
 			assertEquals("Id:" + testNames[i] + " FAILED", getResultForTest(i), apsp.getShortestPathLength());
@@ -91,15 +91,25 @@ public class APSPTest {
 	}
 
 	//@Test
-	public void testTestCase1()  {
-		APSP apsp = new APSP(new JohnsonAlgorithm(getInputFileName(1)));
-		assertNull(apsp.getShortestPathLength());
+	public void testAPSP_g1() {
+			APSP apsp = new APSP(new JohnsonAlgorithm("resources/course4/week1/g1.txt"));
+			assertNull( apsp.getShortestPathLength());
 	}
 	//@Test
-	public void testTestCase2()  {
-		
-		APSP apsp = new APSP(new JohnsonAlgorithm(getInputFileName(2)));
-		assertEquals(-66,apsp.getShortestPathLength().intValue());
+	public void testAPSP_g2() {
+			APSP apsp = new APSP(new JohnsonAlgorithm("resources/course4/week1/g2.txt"));
+			assertNull(apsp.getShortestPathLength());
+	}
+	//@Test
+	public void testAPSP_g3() {
+			APSP apsp = new APSP(new JohnsonAlgorithm("resources/course4/week1/g3.txt"));
+			assertEquals(-19, apsp.getShortestPathLength().intValue());
+	}
+
+	//@Test
+	public void testAPSP_large() {
+			APSP apsp = new APSP(new JohnsonAlgorithm("resources/course4/week1/large.txt"));
+			assertEquals(0, apsp.getShortestPathLength().intValue());
 	}
 
 //	@Test
