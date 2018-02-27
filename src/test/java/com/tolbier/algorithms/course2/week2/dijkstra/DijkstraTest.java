@@ -44,7 +44,14 @@ public class DijkstraTest {
 		assertEquals("2599,2610,2947,2052,2367,2399,2029,2442,2505,3068", 
 				generateTestString(new int [] {7,37,59,82,99,115,133,165,188,197},shortestPaths ));
 	}
-
+	@Test
+	public void testDijkstraHeapAislate() {
+		Graph<Integer> graph =GraphUtil.getWeightedGraph("resources/course2/week2/dijskstraTestAislateNode.txt"); 
+		graph.addVertex(new Vertex<Integer>(4));
+		Map<Vertex<Integer>,Integer> shortestPaths= dijkstra.dijkstraHeapShortestDistances(graph,4);
+		assertEquals("null,null,null,0", 
+				generateTestString(new int [] {1,2,3,4},shortestPaths ));
+	}
 	private String generateTestString(int[] is, Map<Vertex<Integer>, Integer> shortestPaths) {
 		StringBuilder sb = new StringBuilder();
 		for (int i :is) {
