@@ -88,7 +88,14 @@ public class Dijkstra {
 	}
 
 	int getDijkstraDistance(Edge<Integer> edge) {
-		return shortestDistances.get(edge.getVertex1()) + edge.getWeight();
+		return sumWeights( shortestDistances.get(edge.getVertex1()).intValue() , edge.getWeight());
+	}
+
+	private int sumWeights(int a, int b) {
+		if (a==Integer.MAX_VALUE || b==Integer.MAX_VALUE) return Integer.MAX_VALUE;
+		if (Integer.MAX_VALUE-a < b) return Integer.MAX_VALUE;
+		
+		return a+b;
 	}
 
 }

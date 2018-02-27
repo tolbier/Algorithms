@@ -47,9 +47,12 @@ public class DijkstraTest {
 	@Test
 	public void testDijkstraHeapAislate() {
 		Graph<Integer> graph =GraphUtil.getWeightedGraph("resources/course2/week2/dijskstraTestAislateNode.txt"); 
-		graph.addVertex(new Vertex<Integer>(4));
 		Map<Vertex<Integer>,Integer> shortestPaths= dijkstra.dijkstraHeapShortestDistances(graph,4);
-		assertEquals("null,null,null,0", 
+		assertEquals(
+				 Integer.MAX_VALUE +"," +
+			     Integer.MAX_VALUE +"," +
+			     Integer.MAX_VALUE +"," +
+				 "0", 
 				generateTestString(new int [] {1,2,3,4},shortestPaths ));
 	}
 	private String generateTestString(int[] is, Map<Vertex<Integer>, Integer> shortestPaths) {
