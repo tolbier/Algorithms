@@ -1,6 +1,6 @@
 package com.tolbier.algorithms.course4.week2;
 
-public class Point<T> {
+public abstract class Point<T> {
 	T x;
 	T y;
 	public Point(T x, T y) {
