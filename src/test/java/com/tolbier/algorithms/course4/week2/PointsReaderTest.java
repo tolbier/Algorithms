@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -112,15 +113,15 @@ public class PointsReaderTest {
 
 	@Test
 	public void testPointsRead0() {
-		List<DoublePoint> points = PointsReader.readFloatPointsListFromFilePath(getFloatInputFileName(0));
+		DoublePoint[] points = PointsReader.readFloatPointsListFromFilePath(getFloatInputFileName(0));
 		assertEquals("[[1.185111439847509, 1.1487624635211768],"
-				+ " [1.4444704252469853, 1.9471010355780376]]", points.toString());
+				+ " [1.4444704252469853, 1.9471010355780376]]", Arrays.toString(points));
 	}
 	@Test
 	public void testPointsRead1() {
-		List<DoublePoint> points = PointsReader.readFloatPointsListFromFilePath(getFloatInputFileName(1));
+		DoublePoint[] points = PointsReader.readFloatPointsListFromFilePath(getFloatInputFileName(1));
 		assertEquals("[[0.16798790782408335, 0.6011960820343805],"
-				+ " [1.0980452892354502, 0.001825930206370563]]", points.toString());
+				+ " [1.0980452892354502, 0.001825930206370563]]", Arrays.toString(points));
 	}
 	private String getFloatInputFileName(int i) {
 		return "resources/course4/week2/testcases/input_float_" + testNames[i] + ".txt";

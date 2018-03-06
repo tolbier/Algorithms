@@ -9,19 +9,19 @@ import java.util.Scanner;
 
 public class PointsReader {
 
-	public static List<DoublePoint> readFloatPointsListFromFilePath(String inputFileName) {
-		List<DoublePoint> points = null;
+	public static DoublePoint[] readFloatPointsListFromFilePath(String inputFileName) {
+		DoublePoint[] points = null;
 		Scanner scanner = null;
 
 		try {
 			scanner = new Scanner(new File(inputFileName));
 			scanner.useLocale(Locale.ENGLISH);
 			int n = Integer.parseInt(scanner.next());
-			points = new ArrayList<DoublePoint>(n);
-			for (int i = 1; i<=n; i++) {
+			points = new DoublePoint[n];
+			for (int i = 0; i<n; i++) {
 				Double x = scanner.nextDouble();
 				Double y = scanner.nextDouble();
-				points.add(new DoublePoint(x, y));
+				points[i] = new DoublePoint(x, y);
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
