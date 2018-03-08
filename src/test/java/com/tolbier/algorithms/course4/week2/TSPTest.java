@@ -114,7 +114,7 @@ public class TSPTest {
 	};
 
 
-	@Test
+	//@Test
 	public void testTSP_multiple() {
 		for (int i = 0; i < testNames.length; i++) {
 			TSP tsp= new TSP(getFloatInputFileName(i));
@@ -123,7 +123,12 @@ public class TSPTest {
 		}
 	}
 	
+	@Test
+	public void testCombinations() {
+		assertEquals(6,TSP.combinations(4, 2));
+	}
 
+	
 	private String getFloatInputFileName(int i) {
 		return "resources/course4/week2/testcases/input_float_" + testNames[i] + ".txt";
 	}
