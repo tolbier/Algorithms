@@ -16,6 +16,7 @@ import com.tolbier.algorithms.commons.Graph;
 import com.tolbier.algorithms.commons.Node;
 import com.tolbier.algorithms.course4.week1.apsp.APSP;
 import com.tolbier.algorithms.course4.week1.apsp.algorithms.JohnsonAlgorithm;
+import com.tolbier.algorithms.course4.week2.exceptions.TSPException;
 
 public class TSPTest {
 	String[] testNames = new String[] {
@@ -110,25 +111,40 @@ public class TSPTest {
 //			"89_24",
 //			"90_24",
 //			"91_24",
-			"92_24",
+//			"92_24",
 	};
 
 
-	//@Test
-	public void testTSP_multiple() {
+	@Test
+	public void testTSP_multiple() throws TSPException {
 		for (int i = 0; i < testNames.length; i++) {
 			TSP tsp= new TSP(getFloatInputFileName(i));
 			assertEquals("Id:" + testNames[i] + " FAILED", getResultForTest(i).intValue(), tsp.getTourWeight());
 
 		}
 	}
+	@Test
+	public void testTSP_FINAL() throws TSPException {
+			TSP tsp= new TSP("resources/course4/week2/tsp.txt");
+			assertEquals(0, tsp.getTourWeight());
+	}
 	
 	@Test
 	public void testCombinations() {
 		assertEquals(6,TSP.combinations(4, 2));
 	}
-
-	
+	@Test
+	public void testCombinations24_6() {
+		assertEquals(134596,TSP.combinations(24, 6));
+	}
+	@Test
+	public void testCombinations24_7() {
+		assertEquals(346104,TSP.combinations(24, 7));
+	}
+	@Test
+	public void testCombinations24_8() {
+		assertEquals(735471,TSP.combinations(24, 8));
+	}	
 	private String getFloatInputFileName(int i) {
 		return "resources/course4/week2/testcases/input_float_" + testNames[i] + ".txt";
 	}
