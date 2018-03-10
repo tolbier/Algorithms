@@ -3,6 +3,7 @@ package com.tolbier.algorithms.course4.week2;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 import com.tolbier.algorithms.course4.week2.exceptions.SIteratorException;
 import com.tolbier.algorithms.course4.week2.exceptions.TSPException;
@@ -24,17 +25,24 @@ public class TSP {
 		currMap.put(1, mapDouble);
 		mapDouble.put(0, 0.0);
 		for (int m = 2; m <= n; m++) { // m es el tamaño del Subconjunto
+			System.out.println("m:"+m);
 			lastMap=null;
+			Runtime r = Runtime.getRuntime();
+			r.gc();
+
 			lastMap = currMap;
 			currMap = crearInitialMap(m);
-
-			for (Integer s : currMap.keySet()) {
+			Set<Integer> set= currMap.keySet();
+			int i=0; int setSize=set.size();
+			for (Integer s : set) {
+				if (i%10000==0) System.out.println("m.:"+m+"."+i+"/"+setSize);
 				Iterator<Integer> jIterator = new BitIterator(s, 0);
 				while (jIterator.hasNext()) {
 					int j = jIterator.next();
 					Map<Integer, Double> mapDouble2 = currMap.get(s);
 					mapDouble2.put(j, minChoice(s,s ^ (1 << j), j));
 				}
+				i++;
 			}
 		}
 		lastMap = currMap;

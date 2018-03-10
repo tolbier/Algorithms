@@ -95,7 +95,7 @@ public class TSPTest {
 //			"73_20",
 //			"74_20",
 //			"75_20",
-//			"76_20",
+	//		"76_20",
 //			"77_21",
 //			"78_21",
 //			"79_21",
@@ -115,7 +115,7 @@ public class TSPTest {
 	};
 
 
-	@Test
+	//@Test
 	public void testTSP_multiple() throws TSPException {
 		for (int i = 0; i < testNames.length; i++) {
 			TSP tsp= new TSP(getFloatInputFileName(i));
