@@ -20,38 +20,38 @@ import com.tolbier.algorithms.course4.week2.exceptions.TSPException;
 
 public class TSPTest {
 	String[] testNames = new String[] {
-//			"1_2",
-//			"2_2",
-//			"3_2",
-//			"4_2",
-//			"5_3",
-//			"6_3",
-//			"7_3",
-//			"8_3",
-//			"9_4",
-//			"10_4",
-//			"11_4",
-//			"12_4",
-//			"13_5",
-//			"14_5",
-//			"15_5",
-//			"16_5",
-//			"17_6",
-//			"18_6",
-//			"19_6",
-//			"20_6",
-//			"21_7",
-//			"22_7",
-//			"23_7",
-//			"24_7",
-//			"25_8",
-//			"26_8",
-//			"27_8",
-//			"28_8",
-//			"29_9",
-//			"30_9",
-//			"31_9",
-//			"32_9",
+			"1_2",
+			"2_2",
+			"3_2",
+			"4_2",
+			"5_3",
+			"6_3",
+			"7_3",
+			"8_3",
+			"9_4",
+			"10_4",
+			"11_4",
+			"12_4",
+			"13_5",
+			"14_5",
+			"15_5",
+			"16_5",
+			"17_6",
+			"18_6",
+			"19_6",
+			"20_6",
+			"21_7",
+			"22_7",
+			"23_7",
+			"24_7",
+			"25_8",
+			"26_8",
+			"27_8",
+			"28_8",
+			"29_9",
+			"30_9",
+			"31_9",
+			"32_9",
 //			"33_10",
 //			"34_10",
 //			"35_10",
@@ -95,7 +95,7 @@ public class TSPTest {
 //			"73_20",
 //			"74_20",
 //			"75_20",
-	//		"76_20",
+//			"76_20",
 //			"77_21",
 //			"78_21",
 //			"79_21",
@@ -115,7 +115,7 @@ public class TSPTest {
 	};
 
 
-	//@Test
+	@Test
 	public void testTSP_multiple() throws TSPException {
 		for (int i = 0; i < testNames.length; i++) {
 			TSP tsp= new TSP(getFloatInputFileName(i));
@@ -123,28 +123,16 @@ public class TSPTest {
 
 		}
 	}
-	@Test
+	//@Test
 	public void testTSP_FINAL() throws TSPException {
 			TSP tsp= new TSP("resources/course4/week2/tsp.txt");
-			assertEquals(0, tsp.getTourWeight());
-	}
-	
-	@Test
-	public void testCombinations() {
-		assertEquals(6,TSP.combinations(4, 2));
+			assertEquals(26442, tsp.getTourWeight());
 	}
 	@Test
-	public void testCombinations24_6() {
-		assertEquals(134596,TSP.combinations(24, 6));
-	}
-	@Test
-	public void testCombinations24_7() {
-		assertEquals(346104,TSP.combinations(24, 7));
-	}
-	@Test
-	public void testCombinations24_8() {
-		assertEquals(735471,TSP.combinations(24, 8));
+	public void test_getOneBitsOfKinS_13_3() {
+		assertEquals(2,TSP.getOneBitsOfKinS(3, 13));
 	}	
+
 	private String getFloatInputFileName(int i) {
 		return "resources/course4/week2/testcases/input_float_" + testNames[i] + ".txt";
 	}

@@ -12,35 +12,33 @@ public class TSP {
 	DoublePoint[] points;
 	double[][] distances;
 	int n;
-	Map<Integer, Map<Integer, Double>> currMap;
-	Map<Integer, Map<Integer, Double>> lastMap;
+	Map<Integer, double[]> currMap;
+	Map<Integer, double[]> lastMap;
 
 	public TSP(String floatInputFileName) throws TSPException {
 		points = PointsReader.readFloatPointsListFromFilePath(floatInputFileName);
 		n = points.length;
 		generateDistances();
-		currMap = new HashMap<Integer, Map<Integer, Double>>();
+		currMap = new HashMap<Integer, double[]>();
 		// currMap = crearMap(1);
-		Map<Integer, Double> mapDouble = new HashMap<Integer, Double>();
-		currMap.put(1, mapDouble);
-		mapDouble.put(0, 0.0);
+		double[] arrDouble = new double[1];
+		arrDouble[0] = 0.0;
+		currMap.put(1, arrDouble);
 		for (int m = 2; m <= n; m++) { // m es el tamaño del Subconjunto
-			System.out.println("m:"+m);
-			lastMap=null;
-			Runtime r = Runtime.getRuntime();
-			r.gc();
-
+			//System.out.println("m:" + m);
 			lastMap = currMap;
 			currMap = crearInitialMap(m);
-			Set<Integer> set= currMap.keySet();
-			int i=0; int setSize=set.size();
+			Set<Integer> set = currMap.keySet();
+			int i = 0;
+			int setSize = set.size();
 			for (Integer s : set) {
-				if (i%10000==0) System.out.println("m.:"+m+"."+i+"/"+setSize);
 				Iterator<Integer> jIterator = new BitIterator(s, 0);
+				int h = 1;
 				while (jIterator.hasNext()) {
 					int j = jIterator.next();
-					Map<Integer, Double> mapDouble2 = currMap.get(s);
-					mapDouble2.put(j, minChoice(s,s ^ (1 << j), j));
+					double[] arrDouble2 = currMap.get(s);
+					arrDouble2[h] = minChoice(s, s ^ (1 << j), j);
+					h++;
 				}
 				i++;
 			}
@@ -53,8 +51,9 @@ public class TSP {
 		Iterator<Integer> kIterator = new BitIterator(set, j);
 		while (kIterator.hasNext()) {
 			int k = kIterator.next();
-			Map<Integer, Double> mapDouble = lastMap.get(set2);
-			double v = mapDouble.get(k) + distances[k][j];
+			double[] arrDouble = lastMap.get(set2);
+			int k2 = getOneBitsOfKinS(k, set2);
+			double v = arrDouble[k2] + distances[k][j];
 			if (v < result)
 				result = v;
 		}
@@ -63,23 +62,30 @@ public class TSP {
 
 	}
 
-	private Map<Integer, Map<Integer, Double>> crearInitialMap(int m) throws TSPException {
-		Map<Integer, Map<Integer, Double>> map = crearMap(m);
+	static protected int getOneBitsOfKinS(int k, int s) {
+		int mask = bitsOnes(k + 1);
+		s = s & mask;
+		int i = -1;
+		while (s != 0) {
+			if ((s & 1) == 1)
+				i++;
+			s = s >> 1;
+		}
+		return i;
+	}
+
+	private Map<Integer, double[]> crearInitialMap(int m) throws TSPException {
+		Map<Integer, double[]> map = crearMap(m);
 		initMap(map, m);
 		return map;
 	}
 
-	private Map<Integer, Map<Integer, Double>> crearMap(int m) {
-//		int c = combinations(n - 1, m - 1);
-//		if (c<0) {
-//			int i=1;
-//		}
-//Map<Integer, Map<Integer, Double>> map = new HashMap<Integer, Map<Integer, Double>>(combinations(n - 1, m - 1));
-		Map<Integer, Map<Integer, Double>> map = new HashMap<Integer, Map<Integer, Double>>();
+	private Map<Integer, double[]> crearMap(int m) {
+		Map<Integer, double[]> map = new HashMap<Integer, double[]>();
 		return map;
 	}
 
-	private void initMap(Map<Integer, Map<Integer, Double>> map, int m) throws TSPException {
+	private void initMap(Map<Integer, double[]> map, int m) throws TSPException {
 		// Crear Iterator que devuelva los valores posibles de S , para n y m
 		// inicializar todos los map(s,0), si s=0 -> 0, sino INFINITE
 		Iterator<Integer> sIterator;
@@ -90,9 +96,9 @@ public class TSP {
 		}
 		while (sIterator.hasNext()) {
 			Integer s = sIterator.next();
-			Map<Integer, Double> mapDouble = new HashMap<Integer, Double>();
-			mapDouble.put(0, Double.POSITIVE_INFINITY);
-			map.put(s, mapDouble);
+			double[] arrDouble = new double[m];
+			arrDouble[0] = Double.POSITIVE_INFINITY;
+			map.put(s, arrDouble);
 
 		}
 	}
@@ -107,26 +113,19 @@ public class TSP {
 	}
 
 	public int getTourWeight() {
-		int s= bitsNOnes();
-		return (int) minChoice(s,s, 0);
+		int s = bitsNOnes();
+		return (int) minChoice(s, s, 0);
 	}
 
 	private int bitsNOnes() {
+		return bitsOnes(n);
+	}
+
+	static private int bitsOnes(int n) {
 		int result = 0;
 		for (int i = 1; i <= n; i++) {
 			result = (result << 1) | 1;
 		}
 		return result;
-	}
-
-	public static int combinations(int n, int k) {
-		long dividend = 1;
-		long divisor = 1;
-		for (int i = 1; i <= k; i++) {
-			dividend *= (n - (k - i));
-			divisor *= i;
-		}
-
-		return (int)( dividend / divisor);
 	}
 }
