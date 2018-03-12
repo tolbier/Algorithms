@@ -13,6 +13,7 @@ import org.junit.Test;
 
 import com.tolbier.algorithms.commons.Graph;
 import com.tolbier.algorithms.commons.Node;
+import com.tolbier.algorithms.commons.tsp.DoublePoint;
 
 public class PointsReaderTest {
 	String[] testNames = new String[] {

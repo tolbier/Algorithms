@@ -1,4 +1,4 @@
-package com.tolbier.algorithms.course4.week2;
+package com.tolbier.algorithms.course4.week3;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -21,6 +21,7 @@ public class PointsReader {
 			int n = Integer.parseInt(scanner.next());
 			points = new DoublePoint[n];
 			for (int i = 0; i<n; i++) {
+				scanner.nextInt();
 				Double x = scanner.nextDouble();
 				Double y = scanner.nextDouble();
 				points[i] = new DoublePoint(x, y);

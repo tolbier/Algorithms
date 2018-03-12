@@ -1,4 +1,4 @@
-package com.tolbier.algorithms.course4.week2;
+package com.tolbier.algorithms.commons.tsp;
 
 public class DoublePoint extends Point<Double> {
 
@@ -10,4 +10,5 @@ public class DoublePoint extends Point<Double> {
 		double result = Math.sqrt(Math.pow(this.x - point.x, 2) + Math.pow(this.y - point.y, 2));
 		return result;
 	}
+	
 }

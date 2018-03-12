@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import com.tolbier.algorithms.commons.tsp.DoublePoint;
 import com.tolbier.algorithms.course4.week2.exceptions.SIteratorException;
 import com.tolbier.algorithms.course4.week2.exceptions.TSPException;
 
