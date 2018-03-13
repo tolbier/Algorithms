@@ -10,5 +10,9 @@ public class DoublePoint extends Point<Double> {
 		double result = Math.sqrt(Math.pow(this.x - point.x, 2) + Math.pow(this.y - point.y, 2));
 		return result;
 	}
+	public double euclideanSquared(DoublePoint point) {
+		double result = Math.pow(this.x - point.x, 2) + Math.pow(this.y - point.y, 2);
+		return result;
+	}
 	
 }

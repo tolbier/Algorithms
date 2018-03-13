@@ -33,6 +33,11 @@ public class City {
 		
 	}
 
+	public double euclideanSquared(City city) {
+		return this.coordinates.euclideanSquared(city.getCoordinates());
+		
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

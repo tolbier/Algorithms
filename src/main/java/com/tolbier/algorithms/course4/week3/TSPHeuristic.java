@@ -9,7 +9,16 @@ import com.tolbier.algorithms.commons.tsp.DoublePoint;
 import com.tolbier.algorithms.course4.week2.exceptions.TSPException;
 
 public class TSPHeuristic {
-	
+	private class CityDistance{
+		City city;
+		double distance;
+		public CityDistance(City city, double distance) {
+			super();
+			this.city = city;
+			this.distance = distance;
+		}
+		
+	}
 	City[] cities; 
 	Set<City> unexplored;
 	double tourLength=0;
@@ -18,16 +27,15 @@ public class TSPHeuristic {
 		DoublePoint[] points = PointsReader.readFloatPointsListFromFilePath(floatInputFileName);
 		cities = generateCities(points);
 		unexplored= generateUnexplored();
-		
-		City currentCity=cities[0];
-		unexplored.remove(currentCity);
+
+		CityDistance cityDistance=new CityDistance(cities[0],0);
+		unexplored.remove(cityDistance.city);
 		while (! unexplored.isEmpty()) {
-			City newCity=visitClosestCity(currentCity);
-			tourLength+=currentCity.distanceTo(newCity);
-			currentCity= newCity;
-			unexplored.remove(currentCity);
+			cityDistance=visitClosestCity(cityDistance.city);
+			tourLength+=cityDistance.distance;
+			unexplored.remove(cityDistance.city);
 		}
-		tourLength+=currentCity.distanceTo(cities[0]);
+		tourLength+=cityDistance.city.distanceTo(cities[0]);
 	}
 
 
@@ -56,20 +64,21 @@ public class TSPHeuristic {
 
 
 
-	private City visitClosestCity(City currentCity) {
+	private CityDistance visitClosestCity(City currentCity) {
 		City closestCity=null;
-		double minDistance=Double.POSITIVE_INFINITY;
+		double minEuclideanSquared=Double.POSITIVE_INFINITY;
 		
 		for (City city: unexplored) {
-			double distance= currentCity.distanceTo(city);
-			if (distance<minDistance ||
-					(distance==minDistance &&
-					(city.getIdx()<closestCity.getIdx()))) {
-				minDistance=distance;
-				closestCity = city;
-			}
+			double euclideanSquared= currentCity.euclideanSquared(city);
+
+				if (euclideanSquared<minEuclideanSquared ||
+						(euclideanSquared==minEuclideanSquared &&
+						(city.getIdx()<closestCity.getIdx()))) {
+					minEuclideanSquared=euclideanSquared;
+					closestCity = city;
+				}
 		}
-		return closestCity;
+		return new CityDistance(closestCity, currentCity.distanceTo(closestCity));
 		
 	}
 
