@@ -1,50 +1,188 @@
 package com.tolbier.algorithms.course2.week1.kosaraju;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Arrays;
+import java.util.InputMismatchException;
 import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
+import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
 
+import com.tolbier.algorithms.commons.Graph;
+import com.tolbier.algorithms.commons.Node;
+import com.tolbier.algorithms.course2.week1.kosaraju.utils.MapUtil;
+import com.tolbier.algorithms.course4.week1.apsp.APSP;
+import com.tolbier.algorithms.course4.week1.apsp.algorithms.JohnsonAlgorithm;
+import com.tolbier.algorithms.course4.week2.exceptions.TSPException;
 
 public class KosarajuTest {
-
-	Kosaraju kosaraju;
-	Graph graph;
-	@Before
-	public void init() {
-		kosaraju = new Kosaraju();
-		graph=new Graph(9);
-		graph.addArc(0,4);
-		graph.addArc(1,2);
-		graph.addArc(2,3);
-		graph.addArc(3,1);
-		graph.addArc(3,4);
-		graph.addArc(3,3);
-		graph.addArc(4,5);
-		graph.addArc(5,8);
-		graph.addArc(5,0);
-		graph.addArc(6,7);
-		graph.addArc(7,8);
-		graph.addArc(8,6);
-		graph.addArc(8,8);
-		
-
-	}
-
-	@Test
-	public void testKosaraju() {
-		assertNotNull(kosaraju);
-		kosaraju.kosaraju(graph, graph.reverse());
-		assertEquals("{3=[1, 2, 3], 5=[0, 4, 5], 8=[6, 7, 8]}",kosaraju.toString());
-		kosaraju.kosaraju(graph, graph.reverse());
-		assertEquals("{3=[1, 2, 3], 5=[0, 4, 5], 8=[6, 7, 8]}",kosaraju.toString());
-		kosaraju.kosaraju(graph.reverse(), graph);
-		assertEquals("{3=[1, 2, 3], 5=[0, 4, 5], 8=[6, 7, 8]}",kosaraju.toString());
-		
-	}
-
 	
+	private class Graphs{
+		public Graph<Integer> graph;
+		public Graph<Integer> reverseGraph;
+		public Graphs(Graph<Integer> graph, Graph<Integer> reverseGraph) {
+			super();
+			this.graph = graph;
+			this.reverseGraph = reverseGraph;
+		}
+		
+		
+	}
+	String[] testNames = new String[] {
+			"1_8",
+			"2_8",
+			"3_8",
+			"4_8",
+//			"5_16",
+//			"6_16",
+//			"7_16",
+//			"8_16",
+//			"9_32",
+//			"10_32",
+//			"11_32",
+//			"12_32",
+//			"13_64",
+//			"14_64",
+//			"15_64",
+//			"16_64",
+//			"17_128",
+//			"18_128",
+//			"19_128",
+//			"20_128",
+//			"21_200",
+//			"22_200",
+//			"23_200",
+//			"24_200",
+//			"25_400",
+//			"26_400",
+//			"27_400",
+//			"28_400",
+//			"29_800",
+//			"30_800",
+//			"31_800",
+//			"32_800",
+//			"33_1600",
+//			"34_1600",
+//			"35_1600",
+//			"36_1600",
+//			"37_3200",
+//			"38_3200",
+//			"39_3200",
+//			"40_3200",
+//			"41_6400",
+//			"42_6400",
+//			"43_6400",
+//			"44_6400",
+//			"45_12800",
+//			"46_12800",
+//			"47_12800",
+//			"48_12800",
+//			"49_20000",
+//			"50_20000",
+//			"51_20000",
+//			"52_20000",
+//			"53_40000",
+//			"54_40000",
+//			"55_40000",
+//			"56_40000",
+//			"57_80000",
+//			"58_80000",
+//			"59_80000",
+//			"60_80000",
+//			"61_160000",
+//			"62_160000",
+//			"63_160000",
+//			"64_160000",
+//			"65_320000",
+//			"66_320000",
+//			"67_320000",
+//			"68_320000",
+
+	};
+
+
+	//@Test
+	public void testKosaraju_multiple() throws TSPException {
+		for (int i = 0; i < testNames.length; i++) {
+			//Kosaraju kosaraju=new Kosaraju(getInputFileName(i));
+			//Map<Integer, Set<Integer>>  sccMap= kosaraju.kosaraju(graph, graphRev);
+			//Map<Integer,Integer> sizesMap = createSizesMap(sccMap);
+			//Map<Integer,Integer> orderedSizesMap= MapUtil.sortByValue(sizesMap);
+
+			assertEquals("[4,2,2,0,0]", Arrays.deepToString(getResultForTest(i)));
+
+		}
+	}
+	@Test
+	public void testResults()  {
+		assertEquals("[4, 2, 2, 0, 0]", Arrays.deepToString(getResultForTest(0)));
+		assertEquals("[8, 0, 0, 0, 0]", Arrays.deepToString(getResultForTest(1)));
+		assertEquals("[7, 0, 0, 0, 0]", Arrays.deepToString(getResultForTest(2)));
+		assertEquals("[5, 2, 0, 0, 0]", Arrays.deepToString(getResultForTest(3)));
+	}
+	@Test
+	public void testgetGraphsFromFile()  {
+		assertEquals("0 1 0,1 7 0,2 0 0,3 6 0,4 5 0,5 4 0,6 3 0,7 2 0",getGraphsFromFile(getInputFileName(0)).graph.toString());
+	}
+	
+	private String getInputFileName(int i) {
+		return "resources/course2/week1/testcases/input_mostlyCycles_" + testNames[i] + ".txt";
+	}
+
+	private Graphs getGraphsFromFile(String filename){
+		Scanner scanner=null;
+		Graph<Integer> graph = new Graph<Integer>(true);
+		Graph<Integer> graphRev = new Graph<Integer>(true);
+		try {
+			scanner = new Scanner(new File(filename));
+			
+			while (scanner.hasNextInt()) {			
+				int tail = scanner.nextInt()-1;
+				
+				if (scanner.hasNextInt()) {
+					int head = scanner.nextInt()-1;
+					if (tail!=head) {
+						graph.addEdge(tail, head);
+						graphRev.addEdge(head, tail);
+					}
+				}
+			}
+			
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			scanner.close();
+		}
+		return new Graphs(graph, graphRev);
+	}
+	private Integer[] getResultForTest(int testId) {
+		Integer[] result = new Integer[5];
+		Scanner scanner = null;
+		try {
+			scanner = new Scanner(
+					new File("resources/course2/week1/testcases/output_mostlyCycles_" + testNames[testId] + ".txt"));
+			scanner.useDelimiter(",|$");
+			for (int i  = 0; i<5;i++) {
+				result[i] = scanner.nextInt();
+			}
+
+		} catch (InputMismatchException e) {
+			e.printStackTrace();
+
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+
+			scanner.close();
+		}
+		return result;
+	}
+
 }

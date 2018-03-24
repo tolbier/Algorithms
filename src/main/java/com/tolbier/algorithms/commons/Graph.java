@@ -103,8 +103,8 @@ public class Graph <T>{
     public String toString(){
         StringBuffer buffer = new StringBuffer();
         for(Edge<T> edge : getAllEdges()){
-            buffer.append(edge.getVertex1() + " " + edge.getVertex2() + " " + edge.getWeight());
-            buffer.append("\n");
+            if (buffer.length()>0) buffer.append(",");
+        	buffer.append(edge.getVertex1() + " " + edge.getVertex2() + " " + edge.getWeight());
         }
         return buffer.toString();
     }

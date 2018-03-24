@@ -67,7 +67,7 @@ public class App {
 		} finally {
 			scanner.close();
 		}
-		Kosaraju kosaraju=new Kosaraju();
+		KosarajuOld kosaraju=new KosarajuOld();
 		Map<Integer, Set<Integer>>  sccMap= kosaraju.kosaraju(graph, graphRev);
 		Map<Integer,Integer> sizesMap = createSizesMap(sccMap);
 		Map<Integer,Integer> orderedSizesMap= MapUtil.sortByValue(sizesMap);

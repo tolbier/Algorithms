@@ -65,7 +65,7 @@ public class GraphReaderTest {
 	@Test
 	public void testGraphRead() {
 		Graph<Integer> graph = GraphReader.createDirectedGraphFromFilePath(getInputFileName(0));
-		assertEquals("1 1 -73\n1 2 51\n2 2 44\n2 2 31\n", graph.toString());
+		assertEquals("1 1 -73,1 2 51,2 2 44,2 2 31", graph.toString());
 	}
 	
 	private String getInputFileName(int i) {
