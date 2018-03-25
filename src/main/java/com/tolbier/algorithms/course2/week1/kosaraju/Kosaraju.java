@@ -21,132 +21,130 @@ import com.tolbier.algorithms.course2.week1.kosaraju.utils.StackPopIterator;
 
 public class Kosaraju {
 
-	Graphs graphs;
+	Graph<Integer> graph;
+	protected Graph<Integer> getGraph() {
+		return graph;
+	}
+
 	Set<Integer> explored;
 	Iterator<Integer> sequencer;
 	Stack<Integer> timeOrdered;
-	Map<Integer,Set<Integer>> sccMap;
-	int[]   sizes;	
+	Map<Integer, Set<Integer>> sccMap;
+	int[] sizes;
+
 	protected int[] getSizes() {
 		return sizes;
 	}
 
-	protected Graphs getGraphs() {
-		return graphs;
-	}
-	public class Graphs{
-		public Graph<Integer> graph;
-		public Graph<Integer> reverseGraph;
-		public Graphs(Graph<Integer> graph, Graph<Integer> reverseGraph) {
-			super();
-			this.graph = graph;
-			this.reverseGraph = reverseGraph;
-		}	
-	}
 	public Kosaraju(String fileName) {
-		graphs = getGraphsFromFile(fileName);
-		kosaraju(graphs);
+		graph = getGraphFromFile(fileName);
+		kosaraju(graph);
 		analyzeSizes();
 	}
 
 	private void analyzeSizes() {
-		int[]   sizes =  new int[sccMap.keySet().size()];
-		int i=0;
-		for (Integer key:sccMap.keySet()) {
+		int[] sizes = new int[sccMap.keySet().size()];
+		int i = 0;
+		for (Integer key : sccMap.keySet()) {
 			int size = sccMap.get(key).size();
-			if (size==1) size=0;
-			sizes[i++]=size;
+			if (size == 1)
+				size = 0;
+			sizes[i++] = size;
 		}
 		Arrays.sort(sizes);
 		this.sizes = new int[5];
-		for (int j=0; j<5 && j<sizes.length;j++) {
-			this.sizes[j] = sizes[sizes.length-1-j];
+		for (int j = 0; j < 5 && j < sizes.length; j++) {
+			this.sizes[j] = sizes[sizes.length - 1 - j];
 		}
 	}
 
-	private void kosaraju(Graphs graphs) {
-		sequencer = new ReverseSequenceIntegerIterator(graphs.graph.getNumberOfVertices());
-		DFSLoop(graphs.reverseGraph);
+	private void kosaraju(Graph<Integer> graph) {
+		Graph<Integer> graphRev = graph.reverseClone();
+		sequencer = new ReverseSequenceIntegerIterator(graph.getNumberOfVertices());
+		DFSLoop(graphRev);
 		sequencer = getStackPopIterator();
-		DFSLoop(graphs.graph);
-		
+		DFSLoop(graph);
+
 	}
+
 	Iterator<Integer> getStackPopIterator() {
-		return new  StackPopIterator<Integer>(timeOrdered);
+		return new StackPopIterator<Integer>(timeOrdered);
 	}
-	public void DFSLoop(Graph graph) {
-		sccMap=new HashMap<Integer,Set<Integer>>();
+
+	public void DFSLoop(Graph<Integer> graph) {
+		sccMap = new HashMap<Integer, Set<Integer>>();
 		timeOrdered = new Stack<Integer>();
 		explored = new HashSet<Integer>();
 		while (sequencer.hasNext()) {
 			Integer i = sequencer.next();
 			if (isNotExplored(i)) {
-				DFS(graph, i,i);
+				DFS(graph, i, i);
 			}
 		}
 	}
-	public void DFS(Graph<Integer> graph, Integer i,Integer s) {
+
+	public void DFS(Graph<Integer> graph, Integer i, Integer s) {
 		explored.add(i);
-		addToSCC(s,i);
+		addToSCC(s, i);
 		Vertex<Integer> vertexI = graph.getVertex(i);
-		if (vertexI!=null) {
-			List<Vertex<Integer>> adjacentsFromI =vertexI.getAdjacentVertexes();
-			if (adjacentsFromI!=null) {
-				Iterator<Vertex<Integer>> vertexIterator= adjacentsFromI.iterator();
+		if (vertexI != null) {
+			List<Vertex<Integer>> adjacentsFromI = vertexI.getAdjacentVertexes();
+			if (adjacentsFromI != null) {
+				Iterator<Vertex<Integer>> vertexIterator = adjacentsFromI.iterator();
 				while (vertexIterator.hasNext()) {
 					Vertex<Integer> v = vertexIterator.next();
 					int j = (int) v.getId();
 					if (!i.equals(j) && isNotExplored(j)) {
-						DFS(graph, j,s);
+						DFS(graph, j, s);
 					}
-		
+
 				}
 			}
 		}
 		timeOrdered.push(i);
 	}
-	
+
 	private void addToSCC(Integer s, Integer i) {
-		Set<Integer> scc= sccMap.get(s);
-		if (scc==null) {
-			scc= new HashSet<Integer>();
+		Set<Integer> scc = sccMap.get(s);
+		if (scc == null) {
+			scc = new HashSet<Integer>();
 			sccMap.put(s, scc);
 		}
 		scc.add(i);
-		
-		
+
 	}
+
 	private boolean isNotExplored(Integer i) {
 		return !explored.contains(i);
 	}
 
-	private Graphs getGraphsFromFile(String filename){
-		Scanner scanner=null;
+	private Graph<Integer> getGraphFromFile(String filename) {
+		Scanner scanner = null;
 		Graph<Integer> graph = new Graph<Integer>(true);
-		Graph<Integer> graphRev = new Graph<Integer>(true);
 		try {
 			scanner = new Scanner(new File(filename));
-			
-			while (scanner.hasNextInt()) {			
-				int tail = scanner.nextInt()-1;
-				
+
+			while (scanner.hasNextInt()) {
+				int tail = scanner.nextInt() - 1;
+
 				if (scanner.hasNextInt()) {
-					int head = scanner.nextInt()-1;
-					if (tail!=head) {
+					int head = scanner.nextInt() - 1;
+					if (tail != head) {
 						graph.addEdge(tail, head);
-						graphRev.addEdge(head, tail);
 					}
 				}
 			}
-			
+
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			scanner.close();
 		}
-		return new Graphs(graph, graphRev);
+
+		return graph;
 	}
+
 	protected Map<Integer, Set<Integer>> getSccMap() {
 		return sccMap;
 	}

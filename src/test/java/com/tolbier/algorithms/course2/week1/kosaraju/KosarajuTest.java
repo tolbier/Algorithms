@@ -121,7 +121,7 @@ public class KosarajuTest {
 	}
 	@Test
 	public void testgetGraphsFromFile()  {
-		assertEquals("0 1 0,1 7 0,2 0 0,3 6 0,4 5 0,5 4 0,6 3 0,7 2 0",new Kosaraju(getInputFileName(0)).getGraphs().graph.toString());
+		assertEquals("0 1 0,1 7 0,2 0 0,3 6 0,4 5 0,5 4 0,6 3 0,7 2 0",new Kosaraju(getInputFileName(0)).getGraph().toString());
 	}
 	
 	private String getInputFileName(int i) {

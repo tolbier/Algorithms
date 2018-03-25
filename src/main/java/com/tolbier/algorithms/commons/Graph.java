@@ -112,4 +112,19 @@ public class Graph <T>{
 	public int getNumberOfVertices() {
 		return allVertex.size();
 	}
+	public Graph<T> clone() {
+		Graph<T> result = new Graph<T>(isDirected);
+		for (Edge<T>edge:getAllEdges()) {
+			result.addEdge(edge.getVertex1().id, edge.getVertex2().id, edge.getWeight());
+		}
+		return result;
+	}
+	public Graph<T> reverseClone() {
+		Graph<T> result = new Graph<T>(isDirected);
+		for (Edge<T>edge:getAllEdges()) {
+			result.addEdge(edge.getVertex2().id, edge.getVertex1().id, edge.getWeight());
+		}
+		return result;
+	}
+	
 }
