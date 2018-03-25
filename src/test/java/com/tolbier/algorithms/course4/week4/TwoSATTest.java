@@ -20,28 +20,28 @@ import com.tolbier.algorithms.course4.week2.exceptions.TSPException;
 
 public class TwoSATTest {
 	String[] testNames = new String[] {
-//			"1_2",
-//			"2_2",
-//			"3_4",
-//			"4_4",
-//			"5_8",
-//			"6_8",
-//			"7_10",
-//			"8_10",
-//			"9_20",
-//			"10_20",
-//			"11_40",
-//			"12_40",
-//			"13_80",
-//			"14_80",
-//			"15_100",
-//			"16_100",
-//			"17_200",
-//			"18_200",
-//			"19_400",
-//			"20_400",
-//			"21_800",
-//			"22_800",
+			"1_2",
+			"2_2",
+			"3_4",
+			"4_4",
+			"5_8",
+			"6_8",
+			"7_10",
+			"8_10",
+			"9_20",
+			"10_20",
+			"11_40",
+			"12_40",
+			"13_80",
+			"14_80",
+			"15_100",
+			"16_100",
+			"17_200",
+			"18_200",
+			"19_400",
+			"20_400",
+			"21_800",
+			"22_800",
 //			"23_1000",
 //			"24_1000",
 //			"25_2000",
@@ -71,9 +71,34 @@ public class TwoSATTest {
 		}
 	}
 	//@Test
-	public void testTSP_FINAL() throws TSPException {
-//		   TSPHeuristic tsp= new TSPHeuristic("resources/course4/week4/nn.txt");
-//			assertEquals(1203406, tsp.getTourLength());
+	public void testTSP1_FINAL() throws TSPException {
+		TwoSAT twoSAT1= new TwoSAT("resources/course4/week4/2sat1.txt");
+		assertEquals("FAILED:2sat1.txt",1 , twoSAT1.getSatisfiable());
+	}
+	//@Test
+	public void testTSP2_FINAL() throws TSPException {
+		TwoSAT twoSAT2= new TwoSAT("resources/course4/week4/2sat2.txt");
+		assertEquals("FAILED:2sat2.txt",0 , twoSAT2.getSatisfiable());
+	}
+	//@Test
+	public void testTSP3_FINAL() throws TSPException {
+		TwoSAT twoSAT3= new TwoSAT("resources/course4/week4/2sat3.txt");
+		assertEquals("FAILED:2sat3.txt",1 , twoSAT3.getSatisfiable());
+	}
+	//@Test
+	public void testTSP4_FINAL() throws TSPException {
+		TwoSAT twoSAT4= new TwoSAT("resources/course4/week4/2sat4.txt");
+		assertEquals("FAILED:2sat4.txt",1 , twoSAT4.getSatisfiable());
+	}
+	//@Test
+	public void testTSP5_FINAL() throws TSPException {
+		TwoSAT twoSAT5= new TwoSAT("resources/course4/week4/2sat5.txt");
+		assertEquals("FAILED:2sat5.txt",0 , twoSAT5.getSatisfiable());
+	}
+	//@Test
+	public void testTSP6_FINAL() throws TSPException {
+		TwoSAT twoSAT6= new TwoSAT("resources/course4/week4/2sat6.txt");
+		assertEquals("FAILED:2sat6.txt",0 , twoSAT6.getSatisfiable());
 	}
 
 	private String getInputFileName(int i) {

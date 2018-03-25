@@ -22,9 +22,6 @@ import com.tolbier.algorithms.course2.week1.kosaraju.utils.StackPopIterator;
 public class Kosaraju {
 
 	Graph<Integer> graph;
-	protected Graph<Integer> getGraph() {
-		return graph;
-	}
 
 	Set<Integer> explored;
 	Iterator<Integer> sequencer;
@@ -36,8 +33,17 @@ public class Kosaraju {
 		return sizes;
 	}
 
+	public Kosaraju(Graph<Integer> graph) {
+		this.graph = graph;
+		execute();
+	}
+
 	public Kosaraju(String fileName) {
 		graph = getGraphFromFile(fileName);
+		execute();
+	}
+
+	private void execute() {
 		kosaraju(graph);
 		analyzeSizes();
 	}
@@ -60,7 +66,7 @@ public class Kosaraju {
 
 	private void kosaraju(Graph<Integer> graph) {
 		Graph<Integer> graphRev = graph.reverseClone();
-		sequencer = new ReverseSequenceIntegerIterator(graph.getNumberOfVertices());
+		sequencer = new ReverseSequenceIntegerIterator(graph.getNumberOfVertices()+1);
 		DFSLoop(graphRev);
 		sequencer = getStackPopIterator();
 		DFSLoop(graph);
@@ -145,8 +151,12 @@ public class Kosaraju {
 		return graph;
 	}
 
-	protected Map<Integer, Set<Integer>> getSccMap() {
+	public Map<Integer, Set<Integer>> getSccMap() {
 		return sccMap;
+	}
+
+	protected Graph<Integer> getGraph() {
+		return graph;
 	}
 
 }
