@@ -23,50 +23,40 @@ import com.tolbier.algorithms.course4.week2.exceptions.TSPException;
 
 public class KosarajuTest {
 	
-	private class Graphs{
-		public Graph<Integer> graph;
-		public Graph<Integer> reverseGraph;
-		public Graphs(Graph<Integer> graph, Graph<Integer> reverseGraph) {
-			super();
-			this.graph = graph;
-			this.reverseGraph = reverseGraph;
-		}
-		
-		
-	}
+	
 	String[] testNames = new String[] {
 			"1_8",
 			"2_8",
 			"3_8",
 			"4_8",
-//			"5_16",
-//			"6_16",
-//			"7_16",
-//			"8_16",
-//			"9_32",
-//			"10_32",
-//			"11_32",
-//			"12_32",
-//			"13_64",
-//			"14_64",
-//			"15_64",
-//			"16_64",
-//			"17_128",
-//			"18_128",
-//			"19_128",
-//			"20_128",
-//			"21_200",
-//			"22_200",
-//			"23_200",
-//			"24_200",
-//			"25_400",
-//			"26_400",
-//			"27_400",
-//			"28_400",
-//			"29_800",
-//			"30_800",
-//			"31_800",
-//			"32_800",
+			"5_16",
+			"6_16",
+			"7_16",
+			"8_16",
+			"9_32",
+			"10_32",
+			"11_32",
+			"12_32",
+			"13_64",
+			"14_64",
+			"15_64",
+			"16_64",
+			"17_128",
+			"18_128",
+			"19_128",
+			"20_128",
+			"21_200",
+			"22_200",
+			"23_200",
+			"24_200",
+			"25_400",
+			"26_400",
+			"27_400",
+			"28_400",
+			"29_800",
+			"30_800",
+			"31_800",
+			"32_800",
 //			"33_1600",
 //			"34_1600",
 //			"35_1600",
@@ -107,17 +97,20 @@ public class KosarajuTest {
 	};
 
 
-	//@Test
+	@Test
 	public void testKosaraju_multiple() throws TSPException {
 		for (int i = 0; i < testNames.length; i++) {
-			//Kosaraju kosaraju=new Kosaraju(getInputFileName(i));
-			//Map<Integer, Set<Integer>>  sccMap= kosaraju.kosaraju(graph, graphRev);
-			//Map<Integer,Integer> sizesMap = createSizesMap(sccMap);
-			//Map<Integer,Integer> orderedSizesMap= MapUtil.sortByValue(sizesMap);
-
-			assertEquals("[4,2,2,0,0]", Arrays.deepToString(getResultForTest(i)));
-
+			String fileName = getInputFileName(i);
+			Kosaraju kosaraju=new Kosaraju(fileName );
+			assertEquals("FAILED: test#"+i+","+fileName , Arrays.deepToString(getResultForTest(i)), Arrays.toString(kosaraju.getSizes()));
 		}
+	}
+	//@Test
+	public void testKosaraju_final() throws TSPException {
+
+			String fileName = "resources/course2/week1/SCC.txt";
+			Kosaraju kosaraju=new Kosaraju(fileName );
+			assertEquals("FAILED: test#FINAL,"+fileName , "[434821, 968, 459, 313, 211]", Arrays.toString(kosaraju.getSizes()));
 	}
 	@Test
 	public void testResults()  {
@@ -128,40 +121,13 @@ public class KosarajuTest {
 	}
 	@Test
 	public void testgetGraphsFromFile()  {
-		assertEquals("0 1 0,1 7 0,2 0 0,3 6 0,4 5 0,5 4 0,6 3 0,7 2 0",getGraphsFromFile(getInputFileName(0)).graph.toString());
+		assertEquals("0 1 0,1 7 0,2 0 0,3 6 0,4 5 0,5 4 0,6 3 0,7 2 0",new Kosaraju(getInputFileName(0)).getGraphs().graph.toString());
 	}
 	
 	private String getInputFileName(int i) {
 		return "resources/course2/week1/testcases/input_mostlyCycles_" + testNames[i] + ".txt";
 	}
 
-	private Graphs getGraphsFromFile(String filename){
-		Scanner scanner=null;
-		Graph<Integer> graph = new Graph<Integer>(true);
-		Graph<Integer> graphRev = new Graph<Integer>(true);
-		try {
-			scanner = new Scanner(new File(filename));
-			
-			while (scanner.hasNextInt()) {			
-				int tail = scanner.nextInt()-1;
-				
-				if (scanner.hasNextInt()) {
-					int head = scanner.nextInt()-1;
-					if (tail!=head) {
-						graph.addEdge(tail, head);
-						graphRev.addEdge(head, tail);
-					}
-				}
-			}
-			
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			scanner.close();
-		}
-		return new Graphs(graph, graphRev);
-	}
 	private Integer[] getResultForTest(int testId) {
 		Integer[] result = new Integer[5];
 		Scanner scanner = null;
